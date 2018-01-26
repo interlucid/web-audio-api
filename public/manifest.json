@@ -1,0 +1,7 @@
+{
+  "name": "Web Audio API",
+  "short_name": "Web Audio API",
+  "description": "Web Audio API Tutorial",
+  "start_url": "/",
+  "display": "standalone"
+}

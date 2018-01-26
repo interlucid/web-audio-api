@@ -1,0 +1,60 @@
+<link rel="import" href="/styles/styles.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/marked-element/marked-element.html">
+<link rel="import" href="../../bower_components/iron-demo-helpers/demo-snippet.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+
+<dom-module id="web-audio-api">
+
+  <template>
+
+    <style include="int-styles">
+
+      :host {
+        display: block;
+        padding: 2em;
+        max-width: 800px;
+        margin: auto;
+      }
+
+    </style>
+
+    <app-location route="{{route}}" url-space-regex="^\/?(?!([a-zA-Z]*\/[a-zA-Z]+.*){2})"></app-location>
+    <app-route route="{{route}}" pattern="/:slug" active="{{active}}" data="{{data}}"></app-route>
+
+    <marked-element disable-remote-sanitization>
+      <div slot="markdown-html"></div>
+      <script type="text/markdown" src="/pages/[[slug]].md"></script>
+    </marked-element>
+    
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class WebAudioApi extends Polymer.Element {
+
+      static get is() { return 'web-audio-api'; }
+
+      static get properties() {
+        return {
+          slug: {
+            type: String,
+            computed: `computeSlug(data.slug)`
+          }
+        };
+      }
+
+      computeSlug(dataSlug) {
+        if(dataSlug == '') return 'contents';
+        else return dataSlug;
+      }
+
+    }
+
+    window.customElements.define(WebAudioApi.is, WebAudioApi);
+  </script>
+</dom-module>

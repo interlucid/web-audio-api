@@ -1,85 +1,21 @@
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=500, initial-scale=1.0">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+
     <title>Web Audio API</title>
-    <style>
+    <meta name="description" content="test description">
+    <link rel="stylesheet" type="text/css" href="/styles/styles.css">
 
-        html {
-            font-family: "Helvetica Neue", "Helvetica", "Source Sans Pro", sans-serif;
-            margin: 0;
-            background-color: #222;
-            color: #ddd;
-        }
+    <!-- See https://goo.gl/OOhYW5 -->
+    <link rel="manifest" href="/manifest.json">
 
-        a {
-            color: #5cbef1;
-            text-decoration: none;
-        }
+    <script src="/bower_components/webcomponentsjs/webcomponents-loader.js"></script>
 
-        a:hover {
-            text-decoration: underline;
-        }
-
-        a:visited {
-            color: #aa80ff;
-        }
-
-        #container {
-            padding: 2em;
-            max-width: 800px;
-            margin: auto;
-        }
-
-        h1,
-        h2,
-        h3,
-        h4,
-        p {
-            margin: 0;
-        }
-
-
-        /* TODO: replace this obnoxious thing with :matches or equivalent once implemented */
-        /* See http://caniuse.com/#search=%3Amatches */
-
-        p + p,
-        p + h1,
-        p + h2,
-        p + h3,
-        p + h4 {
-            margin-top: 1.3em;
-        }
-
-        h1 + p,
-        h1 + h1,
-        h1 + h2,
-        h1 + h3,
-        h1 + h4,
-        h2 + p,
-        h2 + h1,
-        h2 + h2,
-        h2 + h3,
-        h2 + h4,
-        h3 + p,
-        h3 + h1,
-        h3 + h2,
-        h3 + h3,
-        h3 + h4,
-        h4 + p,
-        h4 + h1,
-        h4 + h2,
-        h4 + h3,
-        h4 + h4 {
-            margin-top: .7em;
-        }
-
-    </style>
-</head>
-<body>
-    <div id="container">
-        <h1>Web Audio API</h1>
-        <p>Learn how to use the Web Audio API</p>
-    </div>
-</body>
+    <link rel="import" href="/src/web-audio-api/web-audio-api.html">
+  </head>
+  <body>
+    <web-audio-api></web-audio-api>
+  </body>
 </html>
