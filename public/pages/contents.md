@@ -2,6 +2,10 @@
 
 [Introduction](./intro)
 
+## Params
+
+[AudioParam](./audio-params)
+
 ## Nodes
 
 ### Source Nodes
