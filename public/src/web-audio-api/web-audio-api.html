@@ -43,13 +43,14 @@
         return {
           slug: {
             type: String,
+            value: 'contents',
             computed: `computeSlug(data.slug)`
           }
         };
       }
 
       computeSlug(dataSlug) {
-        if(dataSlug === '') return 'contents';
+        if(!dataSlug || dataSlug === '') return 'contents';
         else return dataSlug;
       }
 

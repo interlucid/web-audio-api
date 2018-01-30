@@ -6,15 +6,6 @@
 
 Oscillators are electronic circuits that produce an electronic signal that moves back and forth, or oscillates.
 
-### Kinds of oscillators
-
-There are several kinds of oscillators.  The following types are more well known in the music world:
-
-- sine (plain tone sound)
-- square (more shrill)
-- sawtooth (very buzzy/distorted)
-- triangle (slightly buzzy)
-
 ## Implementation
 
 Oscillators are created with the following code (assuming you have an audio context):
@@ -23,9 +14,24 @@ Oscillators are created with the following code (assuming you have an audio cont
 const oscillatorNode = context.createOscillator();
 ```
 
+### Type
+
+There are several kinds of oscillators.  Oscillator type is defined by the waveform the generated sound makes.  The following waveform types are more well known in the music world and are already implemented in the Web Audio API:
+
+- `sine` (plain tone sound)
+- `square` (more shrill)
+- `sawtooth` (very buzzy/distorted)
+- `triangle` (slightly buzzy)
+
+You can switch the oscillator type to `value` with the following code:
+
+```javascript
+oscillatorNode.type = value;
+```
+
 ### Frequency
 
-Frequency is a low resolution adjustment of the oscillator's pitch, measured in [hertz](https://en.wikipedia.org/wiki/Hertz) (Hz).  The [human hearing range](https://en.wikipedia.org/wiki/Hearing_range#Humans) extends from 20 to 20,000 Hz.  However, frequencies lower than 20 Hz can be used to create an effect called [low frequency oscillation](https://en.wikipedia.org/wiki/Low-frequency_oscillation). The default value for the `OscillatorNode`'s `frequency` property is 440 Hz (middle A).
+Frequency is a low resolution adjustment of the oscillator's pitch, measured in [hertz](https://en.wikipedia.org/wiki/Hertz) (Hz).  The [human hearing range](https://en.wikipedia.org/wiki/Hearing_range#Humans) extends from 20 to 20,000 Hz.  However, frequencies lower than 20 Hz can be used to modulate other oscillators creating an effect called [low frequency oscillation](https://en.wikipedia.org/wiki/Low-frequency_oscillation). The default value for the `OscillatorNode`'s `frequency` property is 440 Hz (middle A).
 
 You can set the frequency to `value` through the `frequency` [`AudioParam`](./audio-params):
 
@@ -44,8 +50,6 @@ You can set the detune to `value` through the `detune` [`AudioParam`](./audio-pa
 ```javascript
 oscillatorNode.detune.setValueAtTime(value, context.currentTime);
 ```
-
-### Type
 
 ## Demo
 
