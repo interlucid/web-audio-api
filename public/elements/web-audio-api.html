@@ -1,4 +1,5 @@
 <link rel="import" href="/styles/styles.html">
+<link rel="import" href="/elements/feedback-form.html">
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../../bower_components/marked-element/marked-element.html">
 <link rel="import" href="../../bower_components/iron-demo-helpers/demo-snippet.html">
@@ -12,21 +13,47 @@
     <style include="int-styles">
 
       :host {
+        --container-width: 1000px;
+        --sidebar-width: 13em;
         display: block;
-        padding: 2em;
-        max-width: 800px;
         margin: auto;
+        max-width: var(--container-width);
       }
+
+      #container {
+				display: grid;
+				grid-template: 1fr / var(--sidebar-width) calc(var(--container-width) - var(--sidebar-width));
+				grid-gap: 1em 1em;
+			}
+
+			#container > * {
+				padding: 1em;
+			}
+
+			#sidebar {
+				background-color: #414141;
+			}
 
     </style>
 
     <app-location route="{{route}}" url-space-regex="^\/?(?!([a-zA-Z]*\/[a-zA-Z]+.*){2})"></app-location>
     <app-route route="{{route}}" pattern="/:slug" active="{{active}}" data="{{data}}"></app-route>
 
-    <marked-element disable-remote-sanitization>
-      <div slot="markdown-html"></div>
-      <script type="text/markdown" src="/pages/[[slug]].md"></script>
-    </marked-element>
+    <div id="container">
+      <marked-element id="sidebar">
+        <div slot="markdown-html"></div>
+        <script type="text/markdown" src="/pages/contents.md"></script>
+      </marked-element>
+  
+      <marked-element disable-remote-sanitization>
+        <div slot="markdown-html"></div>
+        <script type="text/markdown" src="/pages/[[slug]].md"></script>
+      </marked-element>
+    </div>
+
+    <footer>
+      Copyright © Brandon der Blätter [[date]].  <a href="https://github.com/intcreator/web-audio-api">GitHub</a>.
+    </footer>
     
   </template>
 
@@ -45,12 +72,16 @@
             type: String,
             value: 'contents',
             computed: `computeSlug(data.slug)`
+          },
+          date: {
+            type: String,
+            value: new Date().getFullYear()
           }
         };
       }
 
       computeSlug(dataSlug) {
-        if(!dataSlug || dataSlug === '') return 'contents';
+        if(!dataSlug || dataSlug === '') return 'intro';
         else return dataSlug;
       }
 

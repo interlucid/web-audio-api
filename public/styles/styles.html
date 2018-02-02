@@ -10,6 +10,14 @@
 				background-color: #222;
 				color: #ddd;
 			}
+			
+			:host {
+				font-size: 1.1em;
+			}
+
+			* {
+				line-height: 1.4em;
+			}
 
 			[hidden] {
 				display: none !important;
@@ -30,6 +38,11 @@
 
 			paper-tabs {
 				--paper-tabs-selection-bar-color: white;
+			}
+
+			.int-vertical-container > * {
+				display: block;
+				width: 100%;
 			}
 
 			.int-vertical-container > * + * {
@@ -84,6 +97,12 @@
 				display: block;
 			}
 
+			footer {
+				padding: 1em;
+				text-align: center;
+				color: #7d7d7d;
+			}
+
 			/* add some space to IDs to offset header */
 
 			:target:before {
@@ -116,15 +135,15 @@
 
 			h4 {
 				font-weight: 300;
-				font-size: 1.5em;
+				font-size: 1.1em;
 			}
 
 			p,
 			li,
 			input,
 			textarea,
-			pre, {
-				font-size: 1.3em;
+			pre {
+				font-size: 1em;
 				font-weight: 400;
 				letter-spacing: .02em;
 			}
@@ -165,6 +184,11 @@
 				line-height: 1;
 			}
 
+			img {
+				width: 100%;
+				height: 100px;
+			}
+
 			h1,
 			h2,
 			h3,
@@ -177,35 +201,15 @@
 			/* TODO: replace this obnoxious thing with :matches or equivalent once implemented */
 			/* See http://caniuse.com/#search=%3Amatches */
 
-			p + p,
-			p + h1,
-			p + h2,
-			p + h3,
-			p + h4 {
-				margin-top: 1.3em;
+			p + * {
+				margin-top: 1em;
 			}
 
-			h1 + p,
-			h1 + h1,
-			h1 + h2,
-			h1 + h3,
-			h1 + h4,
-			h2 + p,
-			h2 + h1,
-			h2 + h2,
-			h2 + h3,
-			h2 + h4,
-			h3 + p,
-			h3 + h1,
-			h3 + h2,
-			h3 + h3,
-			h3 + h4,
-			h4 + p,
-			h4 + h1,
-			h4 + h2,
-			h4 + h3,
-			h4 + h4 {
-				margin-top: .7em;
+			h1 + *,
+			h2 + *,
+			h3 + *,
+			h4 + * {
+				margin-top: .5em;
 			}
 
 
@@ -248,6 +252,7 @@
 
 			demo-snippet {
 				color: black;
+				width: 100%;
 			}
 
 			demo-snippet input {

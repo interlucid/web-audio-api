@@ -1,6 +1,6 @@
 # Web Audio API Tutorial
 
-[Contents](./)
+![waveform](/images/waveform.png)
 
 ## What is it?
 
@@ -20,7 +20,7 @@ The Web Audio API allows users to control audio in browsers. Previously, audio c
 
 ## Context
 
-All web audio API functionality must exist inside a context. Contexts can contain many `AudioNode` objects but each `AudioNode` can only exist inside a single `AudioContext`
+All web audio API functionality must exist inside an [`AudioContext`](audio-context). A single `AudioContext` can contain many [`AudioNode`](audio-node) objects but each `AudioNode` can only exist inside a single `AudioContext`.
 
 To begin, create a context:
 
@@ -34,7 +34,7 @@ Nodes are an essential feature of the web audio API.  Each sound requires the us
 
 ### Source Nodes
 
-Sources are the beginning of the audio API chain.  Sources can be oscillators (`OscillatorNode`) or samples (`AudioBufferSourceNode`).  Each of these nodes can only be used once.  After use, the node must be discarded and replaced if another sound is required.
+Sources are the beginning of the audio API chain.  Sources can be oscillators ([`OscillatorNode`](oscillator-node)) or samples ([`AudioBufferSourceNode`](audio-buffer-source-node)).  Each of these nodes can only be used once.  After use, the node must be discarded and replaced if another sound is required.
 
 Example using an oscillator node:
 

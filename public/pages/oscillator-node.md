@@ -1,14 +1,16 @@
-# Oscillators
+# OscillatorNode
 
-[Contents](./)
+## What is it?
 
-## What are they?
+`OscillatorNode` is a source [`AudioNode`](audio-node) that generates a signal like physical oscillators.  `OscillatorNode` has several settings that can change how it sounds without even using effect.
 
-Oscillators are electronic circuits that produce an electronic signal that moves back and forth, or oscillates.
+### Oscillators
+
+Physical oscillators are electronic circuits that produce a signal that moves back and forth, or oscillates.  We hear this signal and interpret it as sound.
 
 ## Implementation
 
-Oscillators are created with the following code (assuming you have an audio context):
+Web Audio oscillators are created with the following code (assuming you have an [`AudioContext`](./audio-context)):
 
 ```javascript
 const oscillatorNode = context.createOscillator();
@@ -23,32 +25,32 @@ There are several kinds of oscillators.  Oscillator type is defined by the wavef
 - `sawtooth` (very buzzy/distorted)
 - `triangle` (slightly buzzy)
 
-You can switch the oscillator type to `value` with the following code:
+You can set the oscillator by assigning the `type` property on an `OscillatorNode`.  For example, to use a `sawtooth` oscillator:
 
 ```javascript
-oscillatorNode.type = value;
+oscillatorNode.type = 'sawtooth';
 ```
 
 ### Frequency
 
 Frequency is a low resolution adjustment of the oscillator's pitch, measured in [hertz](https://en.wikipedia.org/wiki/Hertz) (Hz).  The [human hearing range](https://en.wikipedia.org/wiki/Hearing_range#Humans) extends from 20 to 20,000 Hz.  However, frequencies lower than 20 Hz can be used to modulate other oscillators creating an effect called [low frequency oscillation](https://en.wikipedia.org/wiki/Low-frequency_oscillation). The default value for the `OscillatorNode`'s `frequency` property is 440 Hz (middle A).
 
-You can set the frequency to `value` through the `frequency` [`AudioParam`](./audio-params):
+You can set the frequency by calling the `setValueAtTime()` function on the `frequency` [`AudioParam`](./audio-params).  For example, to set the frequency to `220` (an octave lower than middle A):
 
 ```javascript
-oscillatorNode.frequency.setValueAtTime(value, context.currentTime);
+oscillatorNode.frequency.setValueAtTime(220, context.currentTime);
 ```
 
 ### Detune
 
-Detune is a high resolution adjustment of the oscillator's pitch, measured in [cents][1].  Cents range from 0-100 in value.  The default value for the `OscillatorNode`'s `detune` property is 0 (no fine tuning of pitch).
+Detune is a high resolution adjustment of the oscillator's pitch, measured in [cents][1].  Cents range from -100 to 100 in value.  The default value for the `OscillatorNode`'s `detune` property is 0 (no fine tuning of pitch).
 
 [1]: https://en.wikipedia.org/wiki/Cent_(music)
 
-You can set the detune to `value` through the `detune` [`AudioParam`](./audio-params):
+You can set the detune by calling the `setValueAtTime()` function on the `detune` [`AudioParam`](./audio-params).  For example, to set the detune to `50` (halfway to the next semi-tone):
 
 ```javascript
-oscillatorNode.detune.setValueAtTime(value, context.currentTime);
+oscillatorNode.detune.setValueAtTime(50, context.currentTime);
 ```
 
 ## Demo
@@ -72,7 +74,7 @@ oscillatorNode.detune.setValueAtTime(value, context.currentTime);
             Detune: <span id="detune-value">0</span> <input type="range" min="-100" max="100" value="0" oninput="changeDetune(value)">
         </div>
         <script>
-            const context = new AudioContext();
+            const context = new AudioContext()
             let oscillatorNode;
             const startTone = function() {
                 if(oscillatorNode) endTone();
