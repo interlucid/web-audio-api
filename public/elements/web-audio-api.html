@@ -5,6 +5,8 @@
 <link rel="import" href="../../bower_components/iron-demo-helpers/demo-snippet.html">
 <link rel="import" href="../../bower_components/app-route/app-route.html">
 <link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/prism-element/prism-highlighter.html">
+<link rel="import" href="../../bower_components/prism-element/prism-theme-default.html">
 
 <dom-module id="web-audio-api">
 
@@ -32,12 +34,24 @@
 
 			#sidebar {
 				background-color: #414141;
-			}
+      }
+      
+      @media (max-width: 1000px) {
+        #container {
+          display: block;
+        }
+
+        #sidebar {
+          display: none;
+        }
+      }
 
     </style>
 
     <app-location route="{{route}}" url-space-regex="^\/?(?!([a-zA-Z]*\/[a-zA-Z]+.*){2})"></app-location>
     <app-route route="{{route}}" pattern="/:slug" active="{{active}}" data="{{data}}"></app-route>
+
+    <prism-highlighter></prism-highlighter>
 
     <div id="container">
       <marked-element id="sidebar">

@@ -20,9 +20,13 @@
 
 #### Effects Nodes
 
-[Gain](gain)
+[GainNode](gain-node)
+
+[BiquadFilterNode](biquad-filter-node)
 
 #### Destination Nodes
+
+[AudioDestinationNode](audio-destination-node)
 
 #### Resources
 

@@ -68,31 +68,38 @@ oscillatorNode.detune.setValueAtTime(50, context.currentTime);
             <button onclick="changeTo('triangle')">Triangle</button>
         </div>
         <div>
-            Frequency: <span id="frequency-value">440</span> <input type="range" min="0" max="20000" value="440" oninput="changeFrequency(value)">
+            Frequency: <input type="range" min="0" max="20000" value="440" oninput="changeFrequency(value)">
         </div>
         <div>
-            Detune: <span id="detune-value">0</span> <input type="range" min="-100" max="100" value="0" oninput="changeDetune(value)">
+            Detune: <input type="range" min="-100" max="100" value="0" oninput="changeDetune(value)">
         </div>
         <script>
-            const context = new AudioContext()
+            const oscillatorNodeContext = new AudioContext()
             let oscillatorNode;
             const startTone = function() {
-                if(oscillatorNode) endTone();
-                oscillatorNode = context.createOscillator();
-                oscillatorNode.connect(context.destination);
+                // allow the user to play sounds
+                oscillatorNodeContext.resume();
+                // stop the previous oscillator from playing
+                if(oscillatorNode) oscillatorNode.stop();
+                // create a new oscillator node (the old node is discarded)
+                oscillatorNode = oscillatorNodeContext.createOscillator();
+                // connect it to the destination
+                oscillatorNode.connect(oscillatorNodeContext.destination);
+                // start the oscillator
                 oscillatorNode.start();
             }
             const endTone = function() {
+                // stop the oscillator
                 oscillatorNode.stop();
             }
             const changeTo = function(type) {
                 oscillatorNode.type = type;
             }
-            const changeFrequency = function(frequency) {
-                oscillatorNode.frequency.setValueAtTime(frequency, context.currentTime);
+            const changeFrequency = (frequency) => {
+                oscillatorNode.frequency.setValueAtTime(frequency, oscillatorNodeContext.currentTime);
             }
             const changeDetune = function(detune) {
-                oscillatorNode.detune.setValueAtTime(detune, context.currentTime);
+                oscillatorNode.detune.setValueAtTime(detune, oscillatorNodeContext.currentTime);
             }
         </script>
     </template>

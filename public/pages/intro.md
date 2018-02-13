@@ -2,13 +2,16 @@
 
 ![waveform](/images/waveform.png)
 
+**Note: Chrome is recommended for audio demos**
+
 ## What is it?
 
 The Web Audio API allows users to control audio in browsers. Previously, audio could be embedded in browsers, but more complex controls that modify audio (such as reverb, delay, or other effects that might be used in DAWs) were only available through the use of plugins. This API allows developers to exercise native control over audio in the browser.
 
 ### Features
 
-- modular routing (explain)
+- **modular routing**: the web audio API is manipulated throught the use of modular nodes, which can easily be added, removed, and rearranged
+- **native to the browser**: all web audio API functionality is intended to be native to the browser (for now, it is implemented most fully in Chrome)
 
 ## Workflow
 
@@ -71,18 +74,24 @@ Here is a simple demo that uses a context, oscillator, and destination.  Notice 
 
 <demo-snippet>
     <template>
-        <button class="int-button" onclick="startTone()">Start</button>
-        <button class="int-button" onclick="endTone()">Stop</button>
+        <button class="int-button" onclick="startAudio()">Start</button>
+        <button class="int-button" onclick="endAudio()">Stop</button>
         <script>
             const context = new AudioContext();
-            let oscillatorNode;
-            const startTone = function() {
-                oscillatorNode = context.createOscillator();
-                oscillatorNode.connect(context.destination);
-                oscillatorNode.start();
+            let oscillatorAudioNode;
+            const startAudio = function() {
+                // allow the user to play sound
+                context.resume();
+                if(oscillatorAudioNode) oscillatorAudioNode.stop();
+                // create an oscillator node
+                oscillatorAudioNode = context.createOscillator();
+                // connect it to the destination
+                oscillatorAudioNode.connect(context.destination);
+                // start the oscillator
+                oscillatorAudioNode.start();
             }
-            const endTone = function() {
-                oscillatorNode.stop();
+            const endAudio = function() {
+                oscillatorAudioNode.stop();
             }
         </script>
     </template>
