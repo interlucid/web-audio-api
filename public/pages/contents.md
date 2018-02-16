@@ -28,6 +28,6 @@
 
 [AudioDestinationNode](audio-destination-node)
 
-#### Resources
+### Resources
 
 [Feedback](feedback)

@@ -74,8 +74,8 @@ Here is a simple demo that uses a context, oscillator, and destination.  Notice 
 
 <demo-snippet>
     <template>
-        <button class="int-button" onclick="startAudio()">Start</button>
-        <button class="int-button" onclick="endAudio()">Stop</button>
+        <button onclick="startAudio()">Start</button>
+        <button onclick="endAudio()">Stop</button>
         <script>
             const context = new AudioContext();
             let oscillatorAudioNode;

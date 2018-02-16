@@ -24,8 +24,8 @@ gainNode.gain.setValueAtTime(.7, gainNodeContext.currentTime);
 
 <demo-snippet>
     <template>
-        <button class="int-button" onclick="startAudio()">Start</button>
-        <button class="int-button" onclick="endAudio()">Stop</button>
+        <button onclick="startAudio()">Start</button>
+        <button onclick="endAudio()">Stop</button>
         <div>
             Gain: <input type="range" min="0" max="100" value="50" oninput="changeGain(value)">
         </div>

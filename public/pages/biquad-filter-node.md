@@ -83,8 +83,8 @@ biquadFilterNode.gain.setValueAtTime(10, biquadFilterNodeContext.currentTime);
 
 <demo-snippet>
     <template>
-        <button class="int-button" onclick="startAudio()">Start</button>
-        <button class="int-button" onclick="endAudio()">Stop</button>
+        <button onclick="startAudio()">Start</button>
+        <button onclick="endAudio()">Stop</button>
         <div>
             <button onclick="changeTo('lowpass')">Lowpass</button>
             <button onclick="changeTo('highpass')">Highpass</button>

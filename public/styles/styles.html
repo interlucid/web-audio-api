@@ -4,15 +4,30 @@
 
 		<style>
 
+			:root {
+				--bg-color: #222;
+			}
+
 			html {
 				font-family: "Helvetica Neue", "Helvetica", "Source Sans Pro", sans-serif;
 				margin: 0;
-				background-color: #222;
+				background-color: var(--bg-color);
 				color: #ddd;
 			}
 			
 			:host {
 				font-size: 1.1em;
+				
+				--demo-snippet-demo: {
+					background: var(--bg-color);
+					font-family: "Helvetica Neue", "Helvetica", "Source Sans Pro", sans-serif;
+				};
+
+				--demo-snippet-code: {
+					background: var(--bg-color);
+					font-size: 1.1em;
+					font-family: Consolas, Inconsolata, "Liberation Mono", Courier, monospace;
+				};
 			}
 
 			* {
@@ -122,12 +137,12 @@
 
 			h2 {
 				font-weight: 200;
-				font-size: 2.1em;
+				font-size: 2.7em;
 			}
 
 			h3 {
 				font-weight: 500;
-				font-size: 1.3em;
+				font-size: 1.6em;
 				letter-spacing: .04em;
 				color: #999;
 				text-transform: uppercase;
@@ -135,7 +150,7 @@
 
 			h4 {
 				font-weight: 300;
-				font-size: 1.1em;
+				font-size: 1.3em;
 			}
 
 			p,
@@ -165,24 +180,23 @@
 				border-color: white;
 			}
 
-			pre code {
-				display: block;
-				background-color: rgba(255, 255, 255, 0.15);
-				padding: .5em .8em;
-				white-space: pre;
-				overflow: auto;
-				margin: 0;
-			}
-
 			code {
 				display: inline-block;
 				padding: 0.1em 0.15em;
 				margin: 0 .1em;
-				background-color: #333;
+				background-color: rgba(255, 255, 255, 0.15);
 				border: 1px solid #666;
-				border-radius: 3px;
+				border-radius: .2em;
 				font-family: Consolas, Inconsolata, "Liberation Mono", Courier, monospace;
 				line-height: 1;
+			}
+
+			pre code {
+				display: block;
+				padding: .5em .8em;
+				white-space: pre;
+				overflow: auto;
+				margin: 0;
 			}
 
 			img {
@@ -206,6 +220,15 @@
 				margin-top: 1em;
 			}
 
+			* + h2 {
+				margin-top: .7em;
+			}
+
+			* + h3,
+			* + h4 {
+				margin-top: 1.5em;
+			}
+
 			h1 + *,
 			h2 + *,
 			h3 + *,
@@ -213,51 +236,12 @@
 				margin-top: .5em;
 			}
 
-
-			.animated {
-				animation-fill-mode: both;
-			}
-
-			@keyframes fadeInUp {
-				from {
-					opacity: 0;
-					transform: translate3d(0, 10%, 0);
-				}
-
-				to {
-					opacity: 1;
-					transform: none;
-				}
-			}
-
-			.fadeInUp {
-				animation-duration: 1s;
-				animation-name: fadeInUp;
-			}
-
-			@keyframes fadeOutDown {
-				from {
-					opacity: 1;
-				}
-
-				to {
-					opacity: 0;
-					transform: translate3d(0, 10%, 0);
-				}
-			}
-
-			.fadeOutDown {
-				animation-duration: .3s;
-				animation-name: fadeOutDown;
-			}
-
-			demo-snippet {
-				color: black;
-				width: 100%;
-			}
-
 			demo-snippet input {
 				width: 100%;
+			}
+
+			demo-snippet button {
+				margin: .3em;
 			}
 
 		</style>
