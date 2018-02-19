@@ -6,32 +6,33 @@
 
 ## Implementation
 
-Getting a sound from a file on the system to a playable `AudioBufferSourceNode` is rather involved.  It requires the following steps:
-
-### Create an AudioBufferSourceNode
+Getting a sound from a file on the system to a playable `AudioBufferSourceNode` is rather involved.  First, assuming you have an [`AudioContext`](audio-context), create the node with the following code:
 
 ```javascript
 let audioBufferSourceNode = audioContext.createBufferSource();
 ```
 
-### Fetching the file using AJAX
+### Buffer
 
-The application needs to fetch the file and make it available for processing.  This can be done with native JavaScript or a library, but the native [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) is concise and effective:
+`AudioBufferSourceNode` contains a buffer where the information for the sound to be played is stored.  One way to import data to that buffer is by using files (as opposed to generating some kind of waveform).
+
+Storing file data in the buffer requires that the file be fetched with AJAX and converted to an [`AudioBuffer`](audio-buffer).  This can be done with either native JavaScript or a library, but the native [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) is concise and effective:
 
 ```javascript
-fetch('/sounds/drums/' + soundName + '.wav').then(response => {
-    return response.arrayBuffer();
-})
-.then(buffer => {
-    // decode the ArrayBuffer as an AudioBuffer
-    audioContext.decodeAudioData(buffer, decoded => {
-        // store the resulting AudioBuffer
-        audioBufferSourceNode.buffer = decoded;
+// fetch the file from the server and return a response object to the next .then()
+fetch('/sounds/drums/' + soundName + '.wav')
+    // retrieve and return an ArrayBuffer to the next .then()
+    .then(response => response.arrayBuffer())
+    .then(buffer => {
+        // decode the ArrayBuffer as an AudioBuffer
+        audioContext.decodeAudioData(buffer, decoded => {
+            // store the resulting AudioBuffer
+            audioBufferSourceNode.buffer = decoded;
+        });
     });
-});
 ```
 
-`fetch` returns a [promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises) which should resolve to a response.  Inside the callback function (`then()`) the response object is first converted to an `ArrayBuffer` and then to an `AudioBuffer`.  Then it is added to the `AudioBufferSourceNode`'s `buffer` property.
+`fetch` returns a [promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises) which should resolve to a response.  Inside the callback function (`.then()`) the response object is first converted to an `ArrayBuffer` and then to an `AudioBuffer`.  Then it is added to the `AudioBufferSourceNode`'s `buffer` property.
 
 Once these steps have been carried out, the `AudioBufferSourceNode` can be started.
 
@@ -61,16 +62,16 @@ It will play until the end of the buffer or until its `stop()` function is calle
             // loop through the sounds we want to import
             for(let soundName of drumKitSoundNames) {
                 // fetch them from the file system
-                fetch('/sounds/drums/' + soundName + '.wav').then(response => {
+                fetch('/sounds/drums/' + soundName + '.wav')
                     // when we get the asynchronous response, convert to an ArrayBuffer
-                    return response.arrayBuffer();
-                }).then(buffer => {
-                    // decode the ArrayBuffer as an AudioBuffer
-                    audioBufferSourceNodeContext.decodeAudioData(buffer, decoded => {
-                        // push the resulting sound to an array
-                        drumKitBuffers.push(decoded);
+                    .then(response => response.arrayBuffer())
+                    .then(buffer => {
+                        // decode the ArrayBuffer as an AudioBuffer
+                        audioBufferSourceNodeContext.decodeAudioData(buffer, decoded => {
+                            // push the resulting sound to an array
+                            drumKitBuffers.push(decoded);
+                        });
                     });
-                });
             }
             const playDrums = (index) => {
                 // allow the user to play sound

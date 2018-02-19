@@ -141,6 +141,7 @@ biquadFilterNode.gain.setValueAtTime(10, biquadFilterNodeContext.currentTime);
                 biquadFilterNode.type = type;
             }
             const changeFrequency = (frequency) => {
+                // this helps us perceive the sound as being linear
                 biquadFilterNode.frequency.setValueAtTime(Math.pow(2, frequency / 10), biquadFilterNodeContext.currentTime);
             }
             const changeDetune = (detune) => {

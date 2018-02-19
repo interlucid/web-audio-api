@@ -10,6 +10,8 @@
 
 [AudioParam](audio-params)
 
+[AudioBuffer](audio-buffer)
+
 ### Nodes
 
 #### Source Nodes

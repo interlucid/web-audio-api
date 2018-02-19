@@ -2,7 +2,7 @@
 
 ![waveform](/images/waveform.png)
 
-**Note: Chrome is recommended for audio demos**
+**Note: Chrome is recommended for audio demos.**
 
 ## What is it?
 
@@ -66,7 +66,7 @@ Connect the last node so far to the destination (usually sound output):
 connectedNode.connect(context.destination);
 ```
 
-Now a sound is read to be played.
+Now a sound is ready to be played.
 
 ## Demo
 
@@ -74,8 +74,10 @@ Here is a simple demo that uses a context, oscillator, and destination.  Notice 
 
 <demo-snippet>
     <template>
-        <button onclick="startAudio()">Start</button>
-        <button onclick="endAudio()">Stop</button>
+        <div>
+            <button onclick="startAudio()">Start</button>
+            <button onclick="endAudio()">Stop</button>
+        </div>
         <script>
             const context = new AudioContext();
             let oscillatorAudioNode;
