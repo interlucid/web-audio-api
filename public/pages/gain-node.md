@@ -14,6 +14,8 @@ oscillatorNode.connect(gainNode);
 gainNode.connect(context.destination);
 ```
 
+### Gain
+
 The amount of gain that can be set is from `0` to `1`.  For example, to set a gain level of `.7`:
 
 ```javascript

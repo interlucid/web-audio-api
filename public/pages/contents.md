@@ -16,15 +16,19 @@
 
 #### Source Nodes
 
-[OscillatorNode](oscillator-node)
-
 [AudioBufferSourceNode](audio-buffer-source-node)
+
+[OscillatorNode](oscillator-node)
 
 #### Effects Nodes
 
-[GainNode](gain-node)
-
 [BiquadFilterNode](biquad-filter-node)
+
+[ConvolverNode](convolver-node)
+
+[DelayNode](delay-node)
+
+[GainNode](gain-node)
 
 #### Destination Nodes
 

@@ -59,7 +59,7 @@ oscillatorNode.frequency.setValueAtTime(220, context.currentTime);
 
 ### Detune
 
-Detune is a high resolution adjustment of the oscillator's pitch, measured in [cents][1].  Cents range from -100 to 100 in value.  The default value for the `OscillatorNode`'s `detune` property is 0 (no fine tuning of pitch).
+Detune is a high resolution adjustment of the oscillator's pitch, measured in [cents][1].  100 cents is equal to one [semitone](https://en.wikipedia.org/wiki/Semitone).  The default value for the `OscillatorNode`'s `detune` property is 0 (no fine tuning of pitch).
 
 [1]: https://en.wikipedia.org/wiki/Cent_(music)
 
@@ -92,7 +92,7 @@ oscillatorNode.detune.setValueAtTime(50, context.currentTime);
         <script>
             const oscillatorNodeContext = new AudioContext();
             let oscillatorNode;
-            const startTone = function() {
+            const startTone = () => {
                 // allow the user to play sounds
                 oscillatorNodeContext.resume();
                 // stop the previous oscillator from playing
@@ -104,18 +104,18 @@ oscillatorNode.detune.setValueAtTime(50, context.currentTime);
                 // start the oscillator
                 oscillatorNode.start();
             }
-            const endTone = function() {
+            const endTone = () => {
                 // stop the oscillator
                 oscillatorNode.stop();
             }
-            const changeTo = function(type) {
+            const changeTo = (type) => {
                 oscillatorNode.type = type;
             }
             const changeFrequency = (frequency) => {
                 // this helps us perceive the sound as being linear
                 oscillatorNode.frequency.setValueAtTime(Math.pow(2, frequency / 100), oscillatorNodeContext.currentTime);
             }
-            const changeDetune = function(detune) {
+            const changeDetune = (detune) => {
                 oscillatorNode.detune.setValueAtTime(detune, oscillatorNodeContext.currentTime);
             }
         </script>
