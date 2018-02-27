@@ -1,0 +1,72 @@
+<link rel="import" href="../styles/styles.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/prism-element/prism-highlighter.html">
+<link rel="import" href="../../bower_components/prism-element/prism-theme-default.html">
+
+<dom-module id="audio-demo">
+
+    <template>
+
+        <style id="import-styles" is="custom-style" include="int-styles prism-theme-default">
+        
+            :host {
+                display: block;
+            }
+
+            iframe {
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+        </style>
+
+        <prism-highlighter></prism-highlighter>
+
+        <marked-element markdown="[[markdown]]">
+            <div slot="markdown-html"></div>
+        </marked-element>
+
+    </template>
+
+    <script>
+
+        /**
+         * @customElement
+         * @polymer
+         */
+        class AudioDemo extends Polymer.Element {
+
+            static get is() { return 'audio-demo'; }
+
+            static get properties() {
+                return {
+                    markdown: {
+                        type: String
+                    }
+                };
+            }
+
+            connectedCallback() {
+                super.connectedCallback();
+                // get text from the template inside the element
+                const templateText = this.querySelector('template').innerHTML;
+                // create an iframe
+                const iframe = document.createElement('iframe');
+                // insert into the document
+                this.shadowRoot.insertBefore(iframe, this.shadowRoot.querySelector('marked-element'));
+                const iframeDoc = iframe.contentWindow.document;
+                // write styles and template contents to iframe
+                iframe.contentWindow.document.write(`
+                    ${this.shadowRoot.querySelector('style').outerHTML}
+                    ${templateText}
+                `);
+                // set the markdown (compensating for whitespace offset)
+                this.markdown = '```' + templateText.replace(/\n\s{8}/g, '\n') + '```';
+			}
+
+        }
+
+        window.customElements.define(AudioDemo.is, AudioDemo);
+
+    </script>
+</dom-module>

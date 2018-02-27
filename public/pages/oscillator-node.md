@@ -93,8 +93,6 @@ oscillatorNode.detune.setValueAtTime(50, context.currentTime);
             const oscillatorNodeContext = new AudioContext();
             let oscillatorNode;
             const startTone = () => {
-                // allow the user to play sounds
-                oscillatorNodeContext.resume();
                 // stop the previous oscillator from playing
                 if(oscillatorNode) oscillatorNode.stop();
                 // create a new oscillator node (the old node is discarded)

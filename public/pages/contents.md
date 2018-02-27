@@ -18,9 +18,13 @@
 
 [AudioBufferSourceNode](audio-buffer-source-node)
 
+[MediaElementAudioSourceNode](media-element-audio-source-node)
+
 [OscillatorNode](oscillator-node)
 
 #### Effects Nodes
+
+[AnalyserNode](analyser-node)
 
 [BiquadFilterNode](biquad-filter-node)
 
@@ -29,6 +33,8 @@
 [DelayNode](delay-node)
 
 [GainNode](gain-node)
+
+[IIRFilterNode](iir-filter-node)
 
 #### Destination Nodes
 

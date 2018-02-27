@@ -16,6 +16,10 @@
 				background-color: var(--bg-color);
 				color: #ddd;
 			}
+
+			body {
+				margin: 0;
+			}
 			
 			:host {
 				font-size: 1.1em;
@@ -34,6 +38,7 @@
 
 			* {
 				line-height: 1.4em;
+				word-wrap: break-word;
 			}
 
 			[hidden] {
@@ -71,6 +76,7 @@
 				margin: 1em auto;
 			}
 
+			button,
 			.int-button,
 			demo-snippet button {
 				font-size: 1em;
@@ -86,6 +92,7 @@
 				text-decoration: none;
 			}
 
+			button:hover,
 			.int-button:hover,
 			demo-snippet button:hover {
 				background-color: #555;
@@ -182,8 +189,9 @@
 				outline: none;
 				border-color: white;
 			}
-
-			code {
+			
+			code,
+			iframe {
 				display: inline-block;
 				padding: 0.1em 0.15em;
 				margin: 0 .1em;
@@ -194,7 +202,8 @@
 				line-height: 1;
 			}
 
-			pre code {
+			pre code,
+			iframe {
 				display: block;
 				padding: .5em .8em;
 				white-space: pre;
