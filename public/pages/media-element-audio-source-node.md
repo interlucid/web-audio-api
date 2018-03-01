@@ -22,6 +22,8 @@ To see an example of this node used in conjuction with another node, check out t
 
 ## Demo
 
+_Like the song?  Download the album for free [here](https://interlucid.bandcamp.com/album/acquisition)._
+
 <audio-demo>
     <template>
         <audio src="/sounds/songs/options.m4a" controls controlsList="nodownload"></audio>

@@ -18,6 +18,45 @@
                 box-sizing: border-box;
             }
 
+			input[type=range] {
+				-webkit-appearance: none;
+				background: transparent;
+				width: 100%;
+			}
+
+			input[type=range]::-webkit-slider-thumb {
+				-webkit-appearance: none;
+				height: 2em;
+				width: 2em;
+				border-radius: 5em;
+				margin-top: -.7em;
+				background: white;
+			}
+
+			input[type=range]::-moz-range-thumb {
+				height: 2em;
+				width: 2em;
+				border-radius: 5em;
+				margin-top: -.7em;
+				background: white;
+			}
+
+			input[type=range]::-webkit-slider-runnable-track {
+				height: .5em;
+				margin: .7em .3em;
+				border-radius: 5em;
+				background: grey;
+			}
+
+			input[type=range]::-moz-range-track {
+				height: .5em;
+				width: 100%;
+				margin: .7em .3em;
+				border-radius: 5em;
+				background: grey;
+			}
+
+
         </style>
 
         <prism-highlighter></prism-highlighter>
@@ -55,11 +94,15 @@
                 // insert into the document
                 this.shadowRoot.insertBefore(iframe, this.shadowRoot.querySelector('marked-element'));
                 const iframeDoc = iframe.contentWindow.document;
-                // write styles and template contents to iframe
+                // write styles and template contents to iframe (only add styles if accessible in the shadow DOM)
+                const styleEl = this.shadowRoot.querySelector('style');
                 iframe.contentWindow.document.write(`
-                    ${this.shadowRoot.querySelector('style').outerHTML}
+                    ${styleEl ? this.shadowRoot.querySelector('style').outerHTML : ''}
                     ${templateText}
                 `);
+                // set the iframe height to 0, then a custom height depending on the size of the elements
+                iframe.height = 0;
+                iframe.height = iframeDoc.body.scrollHeight + 20;
                 // set the markdown (compensating for whitespace offset)
                 this.markdown = '```' + templateText.replace(/\n\s{8}/g, '\n') + '```';
 			}
