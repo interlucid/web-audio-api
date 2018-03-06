@@ -32,14 +32,18 @@
 
 [DelayNode](delay-node)
 
+[DynamicsCompressorNode](dynamics-compressor-node)
+
 [GainNode](gain-node)
 
 [IIRFilterNode](iir-filter-node)
+
+[StereoPannerNode](stereo-panner-node)
 
 #### Destination Nodes
 
 [AudioDestinationNode](audio-destination-node)
 
-### Resources
+<!-- ### Resources -->
 
-[Feedback](feedback)
+<!-- [Feedback](feedback) -->

@@ -1,13 +1,11 @@
 <link rel="import" href="../styles/styles.html">
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../../bower_components/prism-element/prism-highlighter.html">
-<link rel="import" href="../../bower_components/prism-element/prism-theme-default.html">
 
 <dom-module id="audio-demo">
 
     <template>
 
-        <style id="import-styles" is="custom-style" include="int-styles prism-theme-default">
+        <style is="custom-style" include="int-styles syntax-highlighting">
         
             :host {
                 display: block;
@@ -16,6 +14,19 @@
             iframe {
                 width: 100%;
                 box-sizing: border-box;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+                margin-bottom: 0;
+                border-bottom: 0;
+            }
+
+            pre {
+                margin-top: 0;
+            }
+
+            code {
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
             }
 
 			input[type=range] {
@@ -56,14 +67,11 @@
 				background: grey;
 			}
 
-
         </style>
 
-        <prism-highlighter></prism-highlighter>
-
-        <marked-element markdown="[[markdown]]">
+        <markdown-element markdown="[[markdown]]">
             <div slot="markdown-html"></div>
-        </marked-element>
+        </markdown-element>
 
     </template>
 
@@ -92,7 +100,7 @@
                 // create an iframe
                 const iframe = document.createElement('iframe');
                 // insert into the document
-                this.shadowRoot.insertBefore(iframe, this.shadowRoot.querySelector('marked-element'));
+                this.shadowRoot.insertBefore(iframe, this.shadowRoot.querySelector('markdown-element'));
                 const iframeDoc = iframe.contentWindow.document;
                 // write styles and template contents to iframe (only add styles if accessible in the shadow DOM)
                 const styleEl = this.shadowRoot.querySelector('style');
@@ -103,8 +111,10 @@
                 // set the iframe height to 0, then a custom height depending on the size of the elements
                 iframe.height = 0;
                 iframe.height = iframeDoc.body.scrollHeight + 20;
-                // set the markdown (compensating for whitespace offset)
-                this.markdown = '```' + templateText.replace(/\n\s{8}/g, '\n') + '```';
+                // compensate for whitespace offset, weird ="" HTML, and whitespace
+                const text = templateText.replace(/\n\s{8}/g, '\n').replace(/=""/g, '').trim();
+                // set the markdown, wrapping the code in an HTML code block
+                this.markdown = '```html\n' + text + '\n```';
 			}
 
         }

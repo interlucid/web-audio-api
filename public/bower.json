@@ -6,7 +6,8 @@
     "polymer": "Polymer/polymer#^2.0.0",
     "marked-element": "^2.3.3",
     "iron-demo-helpers": "^2.0.0",
-    "app-route": "PolymerElements/app-route#^2.0.3"
+    "app-route": "PolymerElements/app-route#^2.0.3",
+    "commonmark": "^0.28.1"
   },
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",

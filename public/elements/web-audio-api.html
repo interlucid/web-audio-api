@@ -1,19 +1,18 @@
-<link rel="import" href="/styles/styles.html">
-<link rel="import" href="/elements/feedback-form.html">
-<link rel="import" href="/elements/audio-demo.html">
+<link rel="import" href="../styles/styles.html">
+<link rel="import" href="../styles/syntax-highlighting.html">
+<link rel="import" href="../elements/feedback-form.html">
+<link rel="import" href="../elements/audio-demo.html">
+<link rel="import" href="../elements/markdown-element.html">
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../../bower_components/marked-element/marked-element.html">
 <link rel="import" href="../../bower_components/iron-demo-helpers/demo-snippet.html">
 <link rel="import" href="../../bower_components/app-route/app-route.html">
 <link rel="import" href="../../bower_components/app-route/app-location.html">
-<link rel="import" href="../../bower_components/prism-element/prism-highlighter.html">
-<link rel="import" href="../../bower_components/prism-element/prism-theme-default.html">
 
 <dom-module id="web-audio-api">
 
   <template>
 
-    <style is="custom-style" include="int-styles prism-theme-default">
+    <style is="custom-style" include="int-styles syntax-highlighting">
 
       :host {
         --container-width: 1050px;
@@ -52,18 +51,15 @@
     <app-location route="{{route}}" url-space-regex="^\/?(?!([a-zA-Z]*\/[a-zA-Z]+.*){2})"></app-location>
     <app-route route="{{route}}" pattern="/:slug" active="{{active}}" data="{{data}}"></app-route>
 
-    <prism-highlighter></prism-highlighter>
-
     <div id="container">
-      <marked-element id="sidebar">
+      <markdown-element id="sidebar" src="/pages/contents.md">
         <div slot="markdown-html"></div>
-        <script type="text/markdown" src="/pages/contents.md"></script>
-      </marked-element>
-  
-      <marked-element disable-remote-sanitization>
+      </markdown-element>
+      
+      <markdown-element src="[[url]]">
         <div slot="markdown-html"></div>
-        <script type="text/markdown" src="/pages/[[slug]].md"></script>
-      </marked-element>
+      </markdown-element>
+
     </div>
 
     <footer>
@@ -84,9 +80,8 @@
 
       static get properties() {
         return {
-          slug: {
+          url: {
             type: String,
-            value: 'contents',
             computed: `computeSlug(data.slug)`
           },
           date: {
@@ -97,8 +92,7 @@
       }
       
       computeSlug(dataSlug) {
-        if(!dataSlug || dataSlug === '') return 'intro';
-        else return dataSlug;
+        return `/pages/${(!dataSlug || dataSlug === '') ? 'intro' : dataSlug }.md`;
       }
 
     }
