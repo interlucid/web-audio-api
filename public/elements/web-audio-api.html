@@ -7,66 +7,106 @@
 <link rel="import" href="../../bower_components/iron-demo-helpers/demo-snippet.html">
 <link rel="import" href="../../bower_components/app-route/app-route.html">
 <link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 
 <dom-module id="web-audio-api">
 
   <template>
 
     <style is="custom-style" include="int-styles syntax-highlighting">
-
       :host {
         --container-width: 1050px;
         --sidebar-width: 14em;
+        --wide-sidebar-width: 18em;
+        --menu-icon-size: calc(1.5em + 3vw);
         display: block;
         margin: auto;
         max-width: var(--container-width);
       }
 
       #container {
-				display: grid;
-				grid-template: 1fr / var(--sidebar-width) calc(var(--container-width) - var(--sidebar-width));
-				grid-gap: 1em 1em;
-			}
+        display: grid;
+        grid-template: 1fr / var(--sidebar-width) calc(var(--container-width) - var(--sidebar-width));
+        grid-gap: 1em 1em;
+      }
 
-			#container > * {
-				padding: 1em;
-			}
+      #container>* {
+        padding: 1em;
+      }
 
-			#sidebar {
+      #contents {
         background-color: #414141;
       }
-      
+
+      #menu-icon {
+        display: none;
+      }
+
+      .menu-open,
+      .menu-closed {
+        display: block;
+      }
+
+      @media (min-width: 1200px) {
+        #container {
+          grid-template: 1fr / var(--wide-sidebar-width) calc(var(--container-width) - var(--sidebar-width));
+        }
+      }
+
       @media (max-width: 1000px) {
         #container {
           display: block;
         }
 
-        #sidebar {
+        #contents {
+          position: fixed;
+          height: 100vh;
+          width: var(--wide-sidebar-width);
+          box-sizing: border-box;
+          overflow: auto;
+        }
+
+        .menu-open {
+          display: block;
+        }
+
+        .menu-closed {
           display: none;
         }
-      }
 
+        #menu-icon {
+          display: block;
+          position: fixed;
+          right: 0;
+          height: var(--menu-icon-size);
+          width: var(--menu-icon-size);
+          background: black;
+        }
+      }
     </style>
 
     <app-location route="{{route}}" url-space-regex="^\/?(?!([a-zA-Z]*\/[a-zA-Z]+.*){2})"></app-location>
     <app-route route="{{route}}" pattern="/:slug" active="{{active}}" data="{{data}}"></app-route>
 
+    <iron-icon id="menu-icon" icon="[[menuIcon]]" on-click="toggleMenu"></iron-icon>
+
     <div id="container">
-      <markdown-element id="sidebar" src="/pages/contents.md">
+      <markdown-element id="contents" src="/pages/contents.md" class$="[[menuStatus]]">
         <div slot="markdown-html"></div>
       </markdown-element>
-      
+
       <markdown-element src="[[url]]">
         <div slot="markdown-html"></div>
       </markdown-element>
-
     </div>
 
     <footer>
-      Copyright © Brandon der Blätter [[date]].<br>
-      Star or fork on <a href="https://github.com/interlucid/web-audio-api" target="_blank">GitHub</a>.  Support me on <a href="https://www.patreon.com/interlucid" target="_blank">Patreon</a>!
+      Copyright © Brandon der Blätter [[date]].
+      <br> Star or fork on
+      <a href="https://github.com/interlucid/web-audio-api" target="_blank">GitHub</a>. Support me on
+      <a href="https://www.patreon.com/interlucid" target="_blank">Patreon</a>!
     </footer>
-    
+
   </template>
 
   <script>
@@ -82,17 +122,45 @@
         return {
           url: {
             type: String,
-            computed: `computeSlug(data.slug)`
+            computed: 'computeSlug(data.slug)'
           },
           date: {
             type: String,
             value: new Date().getFullYear()
+          },
+          menuOpen: {
+            type: Boolean,
+            value: false
+          },
+          menuIcon: {
+            type: String,
+            computed: 'computeMenuIcon(menuOpen)'
+          },
+          menuStatus: {
+            type: String,
+            computed: 'computeMenuStatus(menuOpen)'
           }
         };
       }
-      
+
       computeSlug(dataSlug) {
-        return `/pages/${(!dataSlug || dataSlug === '') ? 'intro' : dataSlug }.md`;
+        return `/pages/${(!dataSlug || dataSlug === '') ? 'intro' : dataSlug}.md`;
+      }
+
+      computeMenuIcon(menuOpen) {
+        return menuOpen ? 'clear' : 'menu';
+      }
+
+      computeMenuStatus(menuOpen) {
+        return menuOpen ? 'menu-open' : 'menu-closed';
+      }
+
+      toggleMenu() {
+        this.menuOpen = !this.menuOpen;
+      }
+
+      resetMenu() {
+        this.menuOpen = true;
       }
 
     }
