@@ -9,6 +9,7 @@
         
             :host {
                 display: block;
+                position: relative;
             }
 
             iframe {
@@ -27,6 +28,7 @@
             code {
                 border-top-left-radius: 0;
                 border-top-right-radius: 0;
+                max-height: 80vh;
             }
 
 			input[type=range] {
@@ -67,11 +69,23 @@
 				background: grey;
 			}
 
+            markdown-element {
+                position: relative;
+            }
+
+            #copy-button {
+                position: absolute;
+                bottom: 1em;
+                right: 1em;
+            }
+
         </style>
 
+        
         <markdown-element markdown="[[markdown]]">
             <div slot="markdown-html"></div>
         </markdown-element>
+        <button id="copy-button" on-click="copyToClipboard">Copy</button>
 
     </template>
 
@@ -88,6 +102,9 @@
             static get properties() {
                 return {
                     markdown: {
+                        type: String
+                    },
+                    text: {
                         type: String
                     }
                 };
@@ -112,10 +129,19 @@
                 iframe.height = 0;
                 iframe.height = iframeDoc.body.scrollHeight + 20;
                 // compensate for whitespace offset, weird ="" HTML, and whitespace
-                const text = templateText.replace(/\n\s{8}/g, '\n').replace(/=""/g, '').trim();
+                this.text = templateText.replace(/\n\s{8}/g, '\n').replace(/=""/g, '').trim();
                 // set the markdown, wrapping the code in an HTML code block
-                this.markdown = '```html\n' + text + '\n```';
+                this.markdown = '```html\n' + this.text + '\n```';
 			}
+
+            copyToClipboard() {
+                const textarea = document.createElement('textarea');
+                textarea.textContent = this.text;
+                document.body.appendChild(textarea);
+                textarea.select()
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+            }
 
         }
 
