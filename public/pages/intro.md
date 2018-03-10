@@ -2,7 +2,7 @@
 
 ![waveform](/images/waveform.png)
 
-**Note: Chrome is recommended for audio demos.**
+**Note: Chrome or Firefox are recommended for audio demos.**
 
 ## What is it?
 
@@ -98,3 +98,5 @@ Here is a simple demo that uses a context, oscillator, and destination.  Notice 
         </script>
     </template>
 </audio-demo>
+
+Note: Audio demo support for Safari may be added eventually or we might just wait until Safari implements the web audio API to spec.
