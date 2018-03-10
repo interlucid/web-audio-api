@@ -4,27 +4,9 @@
 
 `StereoPannerNode` is an effects node changes how much of the input is sent to the right and left channels of the output (usually right and left speakers).
 
-## Implementation
-
-`StereoPannerNode` is reasonably simple to use.  Once created, it needs a source to connect to it and then it needs to be connected to a destination.
-
-```javascript
-const stereoPannerNode = new StereoPannerNode(context);
-oscillatorNode.connect(stereoPannerNode);
-stereoPannerNode.connect(context.destination);
-```
-
-### Pan
-
-The amount of pan that can be set is from `-1` (all the way to the left) to `1` (all the way to the right).  For example, to set a pan level of `.8`:
-
-```javascript
-stereoPannerNode.pan.setValueAtTime(.8, context.currentTime);
-```
-
 ## Demo
 
-<demo-snippet>
+<audio-demo>
     <template>
         <button onclick="startAudio()">Start</button>
         <button onclick="endAudio()">Stop</button>
@@ -56,4 +38,22 @@ stereoPannerNode.pan.setValueAtTime(.8, context.currentTime);
             }
         </script>
     </template>
-</demo-snippet>
+</audio-demo>
+
+## Implementation
+
+`StereoPannerNode` is reasonably simple to use.  Once created, it needs a source to connect to it and then it needs to be connected to a destination.
+
+```javascript
+const stereoPannerNode = new StereoPannerNode(context);
+oscillatorNode.connect(stereoPannerNode);
+stereoPannerNode.connect(context.destination);
+```
+
+### Pan
+
+The amount of pan that can be set is from `-1` (all the way to the left) to `1` (all the way to the right).  For example, to set a pan level of `.8`:
+
+```javascript
+stereoPannerNode.pan.setValueAtTime(.8, context.currentTime);
+```

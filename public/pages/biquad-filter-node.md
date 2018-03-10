@@ -4,6 +4,84 @@
 
 `BiquadFilterNode` is an effects node that encapsulates several low order filter functions.
 
+## Demo
+
+<audio-demo>
+    <template>
+        <button onclick="startAudio()">Start</button>
+        <button onclick="endAudio()">Stop</button>
+        <div>
+            <button onclick="changeTo('lowpass')">Lowpass</button>
+            <button onclick="changeTo('highpass')">Highpass</button>
+            <button onclick="changeTo('bandpass')">Bandpass</button>
+            <button onclick="changeTo('lowshelf')">Lowshelf</button>
+            <button onclick="changeTo('highshelf')">Highshelf</button>
+            <button onclick="changeTo('peaking')">Peaking</button>
+            <button onclick="changeTo('notch')">Notch</button>
+            <button onclick="changeTo('allpass')">Allpass</button>
+        </div>
+        <div>
+            Frequency: <input type="range" min="33" max="140" value="84" oninput="changeFrequency(value)">
+        </div>
+        <div>
+            Detune: <input type="range" min="-100" max="100" value="0" oninput="changeDetune(value)">
+        </div>
+        <div>
+            Q (quality): <input type="range" min="-40" max="30" value="0" oninput="changeQ(value)">
+        </div>
+        <div>
+            Gain: <input type="range" min="-40" max="40" value="0" oninput="changeGain(value)">
+        </div>
+        <script>
+            const biquadFilterNodeContext = new AudioContext();
+            let audioBufferSourceNode;
+            const biquadFilterNode = biquadFilterNodeContext.createBiquadFilter();
+            const startAudio = function() {
+                // allow the user to play sound
+                biquadFilterNodeContext.resume();
+                if(audioBufferSourceNode) audioBufferSourceNode.stop();
+                // create an audio buffer source node
+                audioBufferSourceNode = biquadFilterNodeContext.createBufferSource();
+                // fill the buffer with white noise (random values between -1.0 and 1.0)
+                arrayBuffer = biquadFilterNodeContext.createBuffer(2, biquadFilterNodeContext.sampleRate * 3, biquadFilterNodeContext.sampleRate);
+                for (let channel = 0; channel < arrayBuffer.numberOfChannels; channel++) {
+                    let nowBuffering = arrayBuffer.getChannelData(channel);
+                    for (let i = 0; i < arrayBuffer.length; i++) {
+                        nowBuffering[i] = Math.random() * 2 - 1;
+                    }
+                }
+                audioBufferSourceNode.buffer = arrayBuffer;
+                audioBufferSourceNode.loop = true;
+                // connect the audio buffer source node to the gain node
+                audioBufferSourceNode.connect(biquadFilterNode);
+                // connect the gain node to the destination
+                biquadFilterNode.connect(biquadFilterNodeContext.destination);
+                // start the oscillator
+                audioBufferSourceNode.start();
+            }
+            const endAudio = function() {
+                audioBufferSourceNode.stop();
+            }
+            const changeTo = function(type) {
+                biquadFilterNode.type = type;
+            }
+            const changeFrequency = (frequency) => {
+                // this helps us perceive the sound as being linear
+                biquadFilterNode.frequency.setValueAtTime(Math.pow(2, frequency / 10), biquadFilterNodeContext.currentTime);
+            }
+            const changeDetune = (detune) => {
+                biquadFilterNode.detune.setValueAtTime(detune, biquadFilterNodeContext.currentTime);
+            }
+            const changeQ = (Q) => {
+                biquadFilterNode.Q.setValueAtTime(Math.pow(10, Q / 10), biquadFilterNodeContext.currentTime);
+            }
+            const changeGain = (gain) => {
+                biquadFilterNode.gain.setValueAtTime(gain, biquadFilterNodeContext.currentTime);
+            }
+        </script>
+    </template>
+</audio-demo>
+
 ## Implementation
 
 `BiquadFilterNode` has a number of properties that can be customized.  As with other effects nodes, it needs to be created.  Then a source needs to connect to it and it needs to be connected to a destination.
@@ -78,81 +156,3 @@ To set the gain to 10 dB:
 ```javascript
 biquadFilterNode.gain.setValueAtTime(10, biquadFilterNodeContext.currentTime);
 ```
-
-## Demo
-
-<demo-snippet>
-    <template>
-        <button onclick="startAudio()">Start</button>
-        <button onclick="endAudio()">Stop</button>
-        <div>
-            <button onclick="changeTo('lowpass')">Lowpass</button>
-            <button onclick="changeTo('highpass')">Highpass</button>
-            <button onclick="changeTo('bandpass')">Bandpass</button>
-            <button onclick="changeTo('lowshelf')">Lowshelf</button>
-            <button onclick="changeTo('highshelf')">Highshelf</button>
-            <button onclick="changeTo('peaking')">Peaking</button>
-            <button onclick="changeTo('notch')">Notch</button>
-            <button onclick="changeTo('allpass')">Allpass</button>
-        </div>
-        <div>
-            Frequency: <input type="range" min="33" max="145" value="84" oninput="changeFrequency(value)">
-        </div>
-        <div>
-            Detune: <input type="range" min="-100" max="100" value="0" oninput="changeDetune(value)">
-        </div>
-        <div>
-            Q (quality): <input type="range" min="-40" max="30" value="0" oninput="changeQ(value)">
-        </div>
-        <div>
-            Gain: <input type="range" min="-40" max="40" value="0" oninput="changeGain(value)">
-        </div>
-        <script>
-            const biquadFilterNodeContext = new AudioContext();
-            let audioBufferSourceNode;
-            const biquadFilterNode = biquadFilterNodeContext.createBiquadFilter();
-            const startAudio = function() {
-                // allow the user to play sound
-                biquadFilterNodeContext.resume();
-                if(audioBufferSourceNode) audioBufferSourceNode.stop();
-                // create an audio buffer source node
-                audioBufferSourceNode = biquadFilterNodeContext.createBufferSource();
-                // fill the buffer with white noise (random values between -1.0 and 1.0)
-                arrayBuffer = biquadFilterNodeContext.createBuffer(2, biquadFilterNodeContext.sampleRate * 3, biquadFilterNodeContext.sampleRate);
-                for (let channel = 0; channel < arrayBuffer.numberOfChannels; channel++) {
-                    let nowBuffering = arrayBuffer.getChannelData(channel);
-                    for (let i = 0; i < arrayBuffer.length; i++) {
-                        nowBuffering[i] = Math.random() * 2 - 1;
-                    }
-                }
-                audioBufferSourceNode.buffer = arrayBuffer;
-                audioBufferSourceNode.loop = true;
-                // connect the audio buffer source node to the gain node
-                audioBufferSourceNode.connect(biquadFilterNode);
-                // connect the gain node to the destination
-                biquadFilterNode.connect(biquadFilterNodeContext.destination);
-                // start the oscillator
-                audioBufferSourceNode.start();
-            }
-            const endAudio = function() {
-                audioBufferSourceNode.stop();
-            }
-            const changeTo = function(type) {
-                biquadFilterNode.type = type;
-            }
-            const changeFrequency = (frequency) => {
-                // this helps us perceive the sound as being linear
-                biquadFilterNode.frequency.setValueAtTime(Math.pow(2, frequency / 10), biquadFilterNodeContext.currentTime);
-            }
-            const changeDetune = (detune) => {
-                biquadFilterNode.detune.setValueAtTime(detune, biquadFilterNodeContext.currentTime);
-            }
-            const changeQ = (Q) => {
-                biquadFilterNode.Q.setValueAtTime(Math.pow(10, Q / 10), biquadFilterNodeContext.currentTime);
-            }
-            const changeGain = (gain) => {
-                biquadFilterNode.gain.setValueAtTime(gain, biquadFilterNodeContext.currentTime);
-            }
-        </script>
-    </template>
-</demo-snippet>

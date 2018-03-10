@@ -25,42 +25,77 @@ The `threshold` property ranges from `0` to `100` dB.  The default value is `-24
 It can be set to `-40` dB as follows:
 
 ```javascript
-dynamicsCompressorNode.threshold = -40;
+dynamicsCompressorNode.threshold.value = -40;
 ```
 
 ### Knee
 
-The `knee` property holds a decibel value that decides how much the signal will smoothly transition from uncompressed audio (below the threshold) to the compressed audio
+The `knee` property holds a decibel value that decides how much the signal will smoothly transition from uncompressed audio (below the threshold) to the compressed audio.  If the knee is set to 0, the transition will be hard, with no transition between compressed and uncompressed signal.  The higher the value, the more extreme the signal will be for the compression to be noticed.
 
-The `threshold` property ranges from `0` to `100` dB.  The default value is `-24` dB.
+The `knee` property ranges from `0` to `40` dB.  The default value is `30` dB.
 
-It can be set to `-40` dB as follows:
+It can be set to `35` dB as follows:
 
 ```javascript
-dynamicsCompressorNode.threshold = -40;
+dynamicsCompressorNode.knee.value = 35;
 ```
 
+### Ratio
+
+The `ratio` property holds a value that determines how much the audio above the threshold will be compressed.  It is a ratio of volume reduction in dB needed for every 1 dB of change in the signal.  A 1:1 ratio means that the audio will not be compressed at all, and an ∞:1 ratio means that the audio will be compressed so much that the signal will never exceed the threshold value.
+
+Generally it's a good idea to start compressing audio with a lower ratio, such as 3:1, then increase the ratio only as needed.  Individual instruments or voices generally benefit from higher ratios, and mixes generally benefit from lower ratios.
+
+The `ratio` property ranges from `1` to `20` dB.  The default value is `12` dB.
+
+To set a 3:1 ratio:
+
+```javascript
+dynamicsCompressorNode.ratio.value = 3;
+```
+
+### Reduction
+
+The `reduction` property can be used to monitor how much gain reduction is being applied by the compressor.  It can be easier to tell how much compression is being applied when monitoring the `reduction` property compared to simply listening to the output signal.
+
+It can be accessed as follows:
+
+```javascript
+console.log(dynamicsCompressorNode.reduction)
+```
+
+### Attack
+
+The `attack` property determines how quickly the compressor reacts to increases in gain in the input signal.  Specifically, if the gain increases suddenly, the `attack` property holds the number of seconds it will take for the compressor node to reduce the gain by 10 dB.
+
+Generally it's a good idea to start with slower attack times, like 50-75 ms (0.05-0.075 seconds).  A very quick attack can dull otherwise interesting sounds.
+
+The `attack` property ranges from `0` to `1` seconds.  The default value is `0.003` seconds.
+
+To set an attack of `0.05` seconds:
+
+```javascript
+dynamicsCompressorNode.attack.value = 0.05
+```
+
+### Release
+
+The `release` property is very similar to the attack property, except that instead of controlling how soon the compressor node reacts to increases in gain, it determines how soon the compressor node reacts to _decreases_ in gain.  Put in other words, it represents how soon the amount of compression is reduced once it is no longer needed.
+
+Generally faster release times are recommended for quick sounds and percussive instruments.  Slower release times are recommended for more flowing instruments like strings.  A slower release can also prevent a pumping effect on bass.
+
+<!-- 
 ## Demo
 
 _Like the song?  Download the album for free [here](https://interlucid.bandcamp.com/album/acquisition)._
 
 <audio-demo>
     <template>
+        <p><em>Workable demo coming soon...</em></p>
         <audio src="/sounds/songs/options.m4a" controls controlsList="nodownload" onplay="visualize()"></audio>
         <div>
             Fast Fourier Transform Size (density): <input type="range" min="5" max="15" value="10" oninput="changeFFTSize(value)">
         </div>
-        <div>
-            Min Decibels (bar variation): <input type="range" min="-200" max="200" value="-100" oninput="changeMinDecibels(value)">
-        </div>
-        <div>
-            Max Decibels (bar height): <input type="range" min="-200" max="200" value="-30" oninput="changeMaxDecibels(value)">
-        </div>
-        <div>
-            Smoothing Time Constant (bar jitter): <input type="range" min="0" max="100" value="80" oninput="changeSmoothingTimeConstant(value)">
-        </div>
-        <canvas id="waveform" width="700" height="150"></canvas>
-        <canvas id="frequencies" width="700" height="150"></canvas>
         <script>
             const context = new AudioContext();
             let mediaElementAudioSourceNode;
@@ -74,51 +109,6 @@ _Like the song?  Download the album for free [here](https://interlucid.bandcamp.
             mediaElementAudioSourceNode.connect(analyserNode);
             // connect the IIR filter to the destination
             analyserNode.connect(context.destination);
-            let bufferLength = analyserNode.frequencyBinCount;
-            const WIDTH = 700;
-            const HEIGHT = 150;
-            let waveformArray = new Uint8Array(bufferLength);
-            const waveformCanvas = document.querySelector('#waveform');
-            const wfCanvasContext = waveformCanvas.getContext('2d');
-            let frequenciesArray = new Uint8Array(bufferLength);
-            const frequenciesCanvas = document.querySelector('#frequencies');
-            const fCanvasContext = frequenciesCanvas.getContext('2d');
-            const visualize = () => {
-                // only animate while playing (reduces CPU load)
-                if(!audioNode.paused) requestAnimationFrame(visualize);
-                // time domain visualization
-                analyserNode.getByteTimeDomainData(waveformArray);
-                wfCanvasContext.clearRect(0, 0, WIDTH, HEIGHT);
-                wfCanvasContext.lineWidth = 2;
-                wfCanvasContext.strokeStyle = '#fff';
-                wfCanvasContext.beginPath();
-                const sliceWidth = WIDTH * 1.0 / bufferLength;
-                let x = 0;
-                for(let i = 0; i < bufferLength; i++) {
-                    const v = waveformArray[i] / 128.0;
-                    const y = v * HEIGHT / 2;
-                    if(i === 0) {
-                        wfCanvasContext.moveTo(x, y);
-                    } else {
-                        wfCanvasContext.lineTo(x, y);
-                    }
-                    x += sliceWidth;
-                }
-                wfCanvasContext.lineTo(waveformCanvas.width, waveformCanvas.height/2);
-                wfCanvasContext.stroke();
-                // frequencies visualization
-                analyserNode.getByteFrequencyData(frequenciesArray);
-                fCanvasContext.clearRect(0, 0, WIDTH, HEIGHT);
-                const barWidth = (WIDTH / bufferLength) * 2.5;
-                let barHeight;
-                let x2 = 0;
-                for(var i = 0; i < bufferLength; i++) {
-                    barHeight = frequenciesArray[i] / 2;
-                    fCanvasContext.fillStyle = 'rgb(' + (barHeight + 100) + ', ' + (barHeight + 100) + ', ' + (barHeight + 100) + ')';
-                    fCanvasContext.fillRect(x2, HEIGHT - barHeight, barWidth, barHeight);
-                    x2 += barWidth + 1;
-                }
-            };
             // define the length of result buffers
             const changeFFTSize = (fftSize) => {
                 analyserNode.fftSize = Math.pow(2, fftSize);
@@ -137,4 +127,4 @@ _Like the song?  Download the album for free [here](https://interlucid.bandcamp.
             }
         </script>
     </template>
-</audio-demo>
+</audio-demo> -->

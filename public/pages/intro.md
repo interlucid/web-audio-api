@@ -72,7 +72,7 @@ Now a sound is ready to be played.
 
 Here is a simple demo that uses a context, oscillator, and destination.  Notice how a new oscillator node is created each time the start button is clicked:
 
-<demo-snippet>
+<audio-demo>
     <template>
         <div>
             <button onclick="startAudio()">Start</button>
@@ -97,4 +97,4 @@ Here is a simple demo that uses a context, oscillator, and destination.  Notice 
             }
         </script>
     </template>
-</demo-snippet>
+</audio-demo>

@@ -4,27 +4,9 @@
 
 `GainNode` is an effects node that modifies the volume of its input.
 
-## Implementation
-
-`GainNode` is one of the simplest nodes to use.  Once created, it needs a source to connect to it and then it needs to be connected to a destination.
-
-```javascript
-const gainNode = context.createGain();
-oscillatorNode.connect(gainNode);
-gainNode.connect(context.destination);
-```
-
-### Gain
-
-The amount of gain that can be set is from `0` to `1`.  For example, to set a gain level of `.7`:
-
-```javascript
-gainNode.gain.setValueAtTime(.7, gainNodeContext.currentTime);
-```
-
 ## Demo
 
-<demo-snippet>
+<audio-demo>
     <template>
         <button onclick="startAudio()">Start</button>
         <button onclick="endAudio()">Stop</button>
@@ -56,4 +38,22 @@ gainNode.gain.setValueAtTime(.7, gainNodeContext.currentTime);
             }
         </script>
     </template>
-</demo-snippet>
+</audio-demo>
+
+## Implementation
+
+`GainNode` is one of the simplest nodes to use.  Once created, it needs a source to connect to it and then it needs to be connected to a destination.
+
+```javascript
+const gainNode = context.createGain();
+oscillatorNode.connect(gainNode);
+gainNode.connect(context.destination);
+```
+
+### Gain
+
+The amount of gain that can be set is from `0` to `1`.  For example, to set a gain level of `.7`:
+
+```javascript
+gainNode.gain.setValueAtTime(.7, gainNodeContext.currentTime);
+```

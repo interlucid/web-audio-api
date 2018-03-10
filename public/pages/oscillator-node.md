@@ -8,6 +8,57 @@
 
 Physical oscillators are electronic circuits that produce a signal that moves back and forth, or oscillates.  We hear this signal and interpret it as sound.
 
+## Demo
+
+<audio-demo>
+    <template>
+        <div>
+            <button onclick="startTone()">Start</button>
+            <button onclick="endTone()">Stop</button>
+        </div>
+        <div>
+            <button onclick="changeTo('sine')">Sine</button>
+            <button onclick="changeTo('square')">Square</button>
+            <button onclick="changeTo('sawtooth')">Sawtooth</button>
+            <button onclick="changeTo('triangle')">Triangle</button>
+        </div>
+        <div>
+            Frequency: <input type="range" min="330" max="1450" value="840" oninput="changeFrequency(value)">
+        </div>
+        <div>
+            Detune: <input type="range" min="-100" max="100" value="0" oninput="changeDetune(value)">
+        </div>
+        <script>
+            const oscillatorNodeContext = new AudioContext();
+            let oscillatorNode;
+            const startTone = () => {
+                // stop the previous oscillator from playing
+                if(oscillatorNode) oscillatorNode.stop();
+                // create a new oscillator node (the old node is discarded)
+                oscillatorNode = oscillatorNodeContext.createOscillator();
+                // connect it to the destination
+                oscillatorNode.connect(oscillatorNodeContext.destination);
+                // start the oscillator
+                oscillatorNode.start();
+            }
+            const endTone = () => {
+                // stop the oscillator
+                oscillatorNode.stop();
+            }
+            const changeTo = (type) => {
+                oscillatorNode.type = type;
+            }
+            const changeFrequency = (frequency) => {
+                // this helps us perceive the sound as being linear
+                oscillatorNode.frequency.setValueAtTime(Math.pow(2, frequency / 100), oscillatorNodeContext.currentTime);
+            }
+            const changeDetune = (detune) => {
+                oscillatorNode.detune.setValueAtTime(detune, oscillatorNodeContext.currentTime);
+            }
+        </script>
+    </template>
+</audio-demo>
+
 ## Implementation
 
 An `OscillatorNode` is created with the following code (assuming you have an [`AudioContext`](./audio-context)):
@@ -68,54 +119,3 @@ You can set the detune by calling the `setValueAtTime()` function on the `detune
 ```javascript
 oscillatorNode.detune.setValueAtTime(50, context.currentTime);
 ```
-
-## Demo
-
-<demo-snippet>
-    <template>
-        <div>
-            <button onclick="startTone()">Start</button>
-            <button onclick="endTone()">Stop</button>
-        </div>
-        <div>
-            <button onclick="changeTo('sine')">Sine</button>
-            <button onclick="changeTo('square')">Square</button>
-            <button onclick="changeTo('sawtooth')">Sawtooth</button>
-            <button onclick="changeTo('triangle')">Triangle</button>
-        </div>
-        <div>
-            Frequency: <input type="range" min="330" max="1450" value="840" oninput="changeFrequency(value)">
-        </div>
-        <div>
-            Detune: <input type="range" min="-100" max="100" value="0" oninput="changeDetune(value)">
-        </div>
-        <script>
-            const oscillatorNodeContext = new AudioContext();
-            let oscillatorNode;
-            const startTone = () => {
-                // stop the previous oscillator from playing
-                if(oscillatorNode) oscillatorNode.stop();
-                // create a new oscillator node (the old node is discarded)
-                oscillatorNode = oscillatorNodeContext.createOscillator();
-                // connect it to the destination
-                oscillatorNode.connect(oscillatorNodeContext.destination);
-                // start the oscillator
-                oscillatorNode.start();
-            }
-            const endTone = () => {
-                // stop the oscillator
-                oscillatorNode.stop();
-            }
-            const changeTo = (type) => {
-                oscillatorNode.type = type;
-            }
-            const changeFrequency = (frequency) => {
-                // this helps us perceive the sound as being linear
-                oscillatorNode.frequency.setValueAtTime(Math.pow(2, frequency / 100), oscillatorNodeContext.currentTime);
-            }
-            const changeDetune = (detune) => {
-                oscillatorNode.detune.setValueAtTime(detune, oscillatorNodeContext.currentTime);
-            }
-        </script>
-    </template>
-</demo-snippet>
