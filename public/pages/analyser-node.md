@@ -35,12 +35,12 @@ _Like the song?  Download the album for free [here](https://interlucid.bandcamp.
             // create a new media source node using the <audio> element
             const audioNode = document.querySelector('audio');
             mediaElementAudioSourceNode = context.createMediaElementSource(audioNode);
-            // create an IIR filter node
+            // create an analyser node
             const analyserNode = context.createAnalyser();
             analyserNode.minDecibels = -150;
-            // connect the media source to the IIR filter
+            // connect the media source to the analyser
             mediaElementAudioSourceNode.connect(analyserNode);
-            // connect the IIR filter to the destination
+            // connect the analyser to the destination
             analyserNode.connect(context.destination);
             let bufferLength = analyserNode.frequencyBinCount;
             const WIDTH = 700;

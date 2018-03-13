@@ -27,7 +27,7 @@
 
       #container {
         display: grid;
-        grid-template-columns: var(--sidebar-width) 1fr;
+        grid-template-columns: var(--sidebar-width) calc(100% - var(--sidebar-width) - var(--grid-gap-width));
         grid-column-gap: var(--grid-gap-width);
       }
 
@@ -54,7 +54,7 @@
         }
 
         #container {
-          grid-template-columns: var(--wide-sidebar-width) 1fr;
+          grid-template-columns: var(--wide-sidebar-width) calc(100% - var(--wide-sidebar-width) - var(--grid-gap-width));
         }
       }
 
@@ -83,6 +83,7 @@
         #menu-icon {
           display: block;
           position: fixed;
+          z-index: 1;
           right: 0;
           height: var(--menu-icon-size);
           width: var(--menu-icon-size);
