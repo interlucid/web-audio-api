@@ -48,6 +48,7 @@
         display: block;
       }
 
+      /* larger screens */
       @media (min-width: 1200px) {
         :host {
           max-width: var(--wide-container-width);
@@ -58,6 +59,7 @@
         }
       }
 
+      /* smaller screens */
       @media (max-width: 1050px) {
         #container {
           display: block;
@@ -80,14 +82,30 @@
           display: none;
         }
 
+        .uncovering {
+          opacity: 0;
+        }
+
+        .covering {
+          opacity: .6;
+        }
+
         #menu-icon {
           display: block;
           position: fixed;
-          z-index: 1;
+          z-index: 2;
           right: 0;
           height: var(--menu-icon-size);
           width: var(--menu-icon-size);
           background: black;
+        }
+
+        #menu-screen {
+          background: rgba(0, 0, 0, 1);
+          width: 150vw;
+          height: 150vh;
+          position: fixed;
+          z-index: 1;
         }
       }
     </style>
@@ -96,12 +114,12 @@
     <app-route route="{{route}}" pattern="/:slug" active="{{active}}" data="{{data}}"></app-route>
 
     <iron-icon id="menu-icon" icon="[[menuIcon]]" on-click="toggleMenu"></iron-icon>
-
+    <div id="menu-screen" class$="[[menuCovering]]" on-click="toggleMenu"></div>
+    
     <div id="container">
       <markdown-element id="contents" src="/pages/contents.md" class$="[[menuStatus]]">
         <div slot="markdown-html"></div>
       </markdown-element>
-
       <markdown-element src="[[url]]">
         <div slot="markdown-html"></div>
       </markdown-element>
@@ -146,6 +164,10 @@
           menuStatus: {
             type: String,
             computed: 'computeMenuStatus(menuOpen)'
+          },
+          menuCovering: {
+            type: String,
+            computed: 'computeMenuCovering(menuOpen)'
           }
         };
       }
@@ -160,6 +182,10 @@
 
       computeMenuStatus(menuOpen) {
         return menuOpen ? 'menu-open' : 'menu-closed';
+      }
+
+      computeMenuCovering(menuOpen) {
+        return menuOpen ? 'covering' : 'uncovering';
       }
 
       toggleMenu() {
