@@ -87,7 +87,7 @@
 `BiquadFilterNode` has a number of properties that can be customized.  As with other effects nodes, it needs to be created.  Then a source needs to connect to it and it needs to be connected to a destination.
 
 ```javascript
-const biquadFilterNode = context.createGain();
+const biquadFilterNode = context.createBiquadFilter();
 oscillatorNode.connect(biquadFilterNode);
 biquadFilterNode.connect(context.destination);
 ```
