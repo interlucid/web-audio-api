@@ -1,11 +1,7 @@
-# Global settings applied to the whole site.  
-# 
-# “publish” is the directory to publish (relative to root of your repo),
-# “command” is your build command,
-# “base” is directory to change to before starting build. if you set base:
-#    that is where we will look for package.json/.nvmrc/etc not repo root!
-
 [build]
-  base    = "public"
-  publish = "public"
-  command = "bower install"
+# This is the directory to change to before starting a build. 
+  base    = "public/"
+# This is the directory that you are publishing from (relative to root of your repo)
+  publish = "public/"
+# This will be your default build command
+#  command = "bower install" 
