@@ -113,7 +113,9 @@ These three types make use of the `gain` value to either increase or decrease th
 
 There is one more type which doesn't fit in with the others:
 
-- `allpass`: no one really knows what it does, so they use [super scientific words to describe it](http://en.wikipedia.org/wiki/All-pass_filter) thinking no one will catch on
+- `allpass`: allows all frequencies to pass, but shifts the [phase][1] of certain sets of frequencies
+
+[1] https://en.wikipedia.org/wiki/Phase_(waves)
 
 If I ever figure out how it works and can explain it in a simple way, I'll let you know.
 
