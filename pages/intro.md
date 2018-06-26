@@ -1,6 +1,6 @@
 # Web Audio API Tutorial
 
-![waveform](/images/waveform.png)
+![waveform](./images/waveform.png)
 
 **Note: Chrome or Firefox are recommended for audio demos.**
 

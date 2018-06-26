@@ -1,4 +1,4 @@
 firebase-debug.log
-public/bower_components
-public/node_modules
+bower_components
+node_modules
 .DS_Store

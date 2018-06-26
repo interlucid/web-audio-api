@@ -18,8 +18,8 @@
 
     </template>
 
-    <script src="../../bower_components/commonmark/dist/commonmark.js"></script>
-    <script src="../../bower_components/prism/prism.js"></script>
+    <script src="../bower_components/commonmark/dist/commonmark.js"></script>
+    <script src="../bower_components/prism/prism.js"></script>
 
     <script>
         /**
@@ -67,12 +67,14 @@
 
             // fetch the markdown and set it locally
             async fetchMarkdown(src) {
+                console.log(src)
                 await fetch(src)
                     .then(async response => {
                         this.markdown = await response.text();
+                        // console.log(this.markdown)
                     })
                     .catch(e => {
-                        console.log(e)
+                        console.error(e)
                     })
             }
 
