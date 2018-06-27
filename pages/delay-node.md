@@ -14,20 +14,20 @@
             Delay: <input type="range" min="0" max="100" value="50" oninput="changeDelay(value)">
         </div>
         <script>
-            const delayNodeContext = new AudioContext();
+            const context = new AudioContext();
             let oscillatorNode;
-            const delayNode = delayNodeContext.createDelay();
-            delayNode.delayTime.setValueAtTime(.5, delayNodeContext.currentTime);
+            const delayNode = context.createDelay();
+            delayNode.delayTime.setValueAtTime(.5, context.currentTime);
             const startAudio = function() {
                 // allow the user to play sound
-                delayNodeContext.resume();
+                context.resume();
                 if(oscillatorNode) oscillatorNode.stop();
                 // create an oscillator node
-                oscillatorNode = delayNodeContext.createOscillator();
+                oscillatorNode = context.createOscillator();
                 // connect the oscillator node to the delay node
                 oscillatorNode.connect(delayNode);
                 // connect the delay node to the destination
-                delayNode.connect(delayNodeContext.destination);
+                delayNode.connect(context.destination);
                 // start the oscillator
                 oscillatorNode.start();
             }
@@ -35,7 +35,7 @@
                 oscillatorNode.stop();
             }
             const changeDelay = (delay) => {
-                delayNode.delayTime.setValueAtTime(delay / 100, delayNodeContext.currentTime);
+                delayNode.delayTime.setValueAtTime(delay / 100, context.currentTime);
             }
         </script>
     </template>

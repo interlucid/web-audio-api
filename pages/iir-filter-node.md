@@ -57,7 +57,7 @@ console.log(magnitudeResponseOutput, phaseResponseOutput);
 
 <audio-demo>
     <template>
-        <audio src="/sounds/songs/options.m4a" controls controlsList="nodownload"></audio>
+        <audio src="./sounds/songs/options.m4a" controls controlsList="nodownload"></audio>
         <ul id="results"></ul>
         <script>
             const context = new AudioContext();

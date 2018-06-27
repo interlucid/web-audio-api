@@ -30,7 +30,7 @@
             Loop end: <input type="range" min="0" max="1000" value="0" oninput="changeLoopEnd(value)">
         </div>
         <script>
-            const audioBufferSourceNodeContext = new AudioContext()
+            const audioBufferSourceNodeContext = new AudioContext();
             const drumKitSoundNames = [
                 'hi-hat',
                 'kick',

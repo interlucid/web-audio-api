@@ -17,18 +17,18 @@
             <button onclick="toggleNormalize()">Toggle Normalize</button>
         </div>
         <script>
-            const convolverNodeContext = new AudioContext();
+            const context = new AudioContext();
             let oscillatorNode;
             let reverb = true;
             let impulseResponse;
-            const convolverNode = new ConvolverNode(convolverNodeContext);
+            const convolverNode = new ConvolverNode(context);
             // fetch the file from the server and return a response object to the next .then()
-            fetch('/sounds/impulse-responses/stpatricks.wav')
+            fetch('./sounds/impulse-responses/stpatricks.wav')
                 // retrieve and return an ArrayBuffer to the next .then()
                 .then(response => response.arrayBuffer())
                 .then(buffer => {
                     // decode the ArrayBuffer as an AudioBuffer
-                    convolverNodeContext.decodeAudioData(buffer, decoded => {
+                    context.decodeAudioData(buffer, decoded => {
                         // store the resulting AudioBuffer
                         convolverNode.buffer = decoded;
                         impulseResponse = decoded;
@@ -36,17 +36,17 @@
                 });
             const startAudio = function() {
                 // allow the user to play sound
-                convolverNodeContext.resume();
+                context.resume();
                 if(oscillatorNode) oscillatorNode.stop();
                 // create an oscillator node
-                oscillatorNode = convolverNodeContext.createOscillator();
+                oscillatorNode = context.createOscillator();
                 if(reverb) {
                     // connect the oscillator node to the convolver node
                     oscillatorNode.connect(convolverNode);
                     // connect the convolver node to the destination
-                    convolverNode.connect(convolverNodeContext.destination);
+                    convolverNode.connect(context.destination);
                 } else {
-                    oscillatorNode.connect(convolverNodeContext.destination)
+                    oscillatorNode.connect(context.destination)
                 }
                 // start the oscillator
                 oscillatorNode.start();

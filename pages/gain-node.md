@@ -14,19 +14,19 @@
             Gain: <input type="range" min="0" max="100" value="50" oninput="changeGain(value)">
         </div>
         <script>
-            const gainNodeContext = new AudioContext();
+            const context = new AudioContext();
             let oscillatorNode;
-            const gainNode = gainNodeContext.createGain();
+            const gainNode = context.createGain();
             const startAudio = function() {
                 // allow the user to play sound
-                gainNodeContext.resume();
+                context.resume();
                 if(oscillatorNode) oscillatorNode.stop();
                 // create an oscillator node
-                oscillatorNode = gainNodeContext.createOscillator();
+                oscillatorNode = context.createOscillator();
                 // connect the oscillator node to the gain node
                 oscillatorNode.connect(gainNode);
                 // connect the gain node to the destination
-                gainNode.connect(gainNodeContext.destination);
+                gainNode.connect(context.destination);
                 // start the oscillator
                 oscillatorNode.start();
             }
@@ -34,7 +34,7 @@
                 oscillatorNode.stop();
             }
             const changeGain = (gain) => {
-                gainNode.gain.setValueAtTime(gain / 100, gainNodeContext.currentTime);
+                gainNode.gain.setValueAtTime(gain / 100, context.currentTime);
             }
         </script>
     </template>
@@ -55,5 +55,5 @@ gainNode.connect(context.destination);
 The amount of gain that can be set is from `0` to `1`.  For example, to set a gain level of `.7`:
 
 ```javascript
-gainNode.gain.setValueAtTime(.7, gainNodeContext.currentTime);
+gainNode.gain.setValueAtTime(.7, context.currentTime);
 ```

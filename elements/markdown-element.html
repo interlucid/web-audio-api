@@ -67,11 +67,9 @@
 
             // fetch the markdown and set it locally
             async fetchMarkdown(src) {
-                console.log(src)
                 await fetch(src)
                     .then(async response => {
                         this.markdown = await response.text();
-                        // console.log(this.markdown)
                     })
                     .catch(e => {
                         console.error(e)

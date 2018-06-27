@@ -33,17 +33,17 @@
             Gain: <input type="range" min="-40" max="40" value="0" oninput="changeGain(value)">
         </div>
         <script>
-            const biquadFilterNodeContext = new AudioContext();
+            const context = new AudioContext();
             let audioBufferSourceNode;
-            const biquadFilterNode = biquadFilterNodeContext.createBiquadFilter();
+            const biquadFilterNode = context.createBiquadFilter();
             const startAudio = function() {
                 // allow the user to play sound
-                biquadFilterNodeContext.resume();
+                context.resume();
                 if(audioBufferSourceNode) audioBufferSourceNode.stop();
                 // create an audio buffer source node
-                audioBufferSourceNode = biquadFilterNodeContext.createBufferSource();
+                audioBufferSourceNode = context.createBufferSource();
                 // fill the buffer with white noise (random values between -1.0 and 1.0)
-                arrayBuffer = biquadFilterNodeContext.createBuffer(2, biquadFilterNodeContext.sampleRate * 3, biquadFilterNodeContext.sampleRate);
+                arrayBuffer = context.createBuffer(2, context.sampleRate * 3, context.sampleRate);
                 for (let channel = 0; channel < arrayBuffer.numberOfChannels; channel++) {
                     let nowBuffering = arrayBuffer.getChannelData(channel);
                     for (let i = 0; i < arrayBuffer.length; i++) {
@@ -55,7 +55,7 @@
                 // connect the audio buffer source node to the gain node
                 audioBufferSourceNode.connect(biquadFilterNode);
                 // connect the gain node to the destination
-                biquadFilterNode.connect(biquadFilterNodeContext.destination);
+                biquadFilterNode.connect(context.destination);
                 // start the oscillator
                 audioBufferSourceNode.start();
             }
@@ -67,16 +67,16 @@
             }
             const changeFrequency = (frequency) => {
                 // this helps us perceive the sound as being linear
-                biquadFilterNode.frequency.setValueAtTime(Math.pow(2, frequency / 10), biquadFilterNodeContext.currentTime);
+                biquadFilterNode.frequency.setValueAtTime(Math.pow(2, frequency / 10), context.currentTime);
             }
             const changeDetune = (detune) => {
-                biquadFilterNode.detune.setValueAtTime(detune, biquadFilterNodeContext.currentTime);
+                biquadFilterNode.detune.setValueAtTime(detune, context.currentTime);
             }
             const changeQ = (Q) => {
-                biquadFilterNode.Q.setValueAtTime(Math.pow(10, Q / 10), biquadFilterNodeContext.currentTime);
+                biquadFilterNode.Q.setValueAtTime(Math.pow(10, Q / 10), context.currentTime);
             }
             const changeGain = (gain) => {
-                biquadFilterNode.gain.setValueAtTime(gain, biquadFilterNodeContext.currentTime);
+                biquadFilterNode.gain.setValueAtTime(gain, context.currentTime);
             }
         </script>
     </template>
@@ -126,7 +126,7 @@ The frequency in the current filtering algorithm measured in Hertz.  This is sim
 To set the frequency to 440 Hz:
 
 ```javascript
-biquadFilterNode.frequency.setValueAtTime(440, biquadFilterNodeContext.currentTime);
+biquadFilterNode.frequency.setValueAtTime(440, context.currentTime);
 ```
 
 ### Detune
@@ -136,7 +136,7 @@ The detune in the current filtering algorithm measured in cents.  This is simila
 To set the amount of detune to 50 cents:
 
 ```javascript
-biquadFilterNode.detune.setValueAtTime(50, biquadFilterNodeContext.currentTime);
+biquadFilterNode.detune.setValueAtTime(50, context.currentTime);
 ```
 
 ### Q
@@ -146,7 +146,7 @@ The Q (quality) adjustment of the current filtering algorithm.  There is no unit
 To set the value of Q to 10:
 
 ```javascript
-biquadFilterNode.Q.setValueAtTime(10, biquadFilterNodeContext.currentTime);
+biquadFilterNode.Q.setValueAtTime(10, context.currentTime);
 ```
 
 ### Gain
@@ -156,5 +156,5 @@ The filter gain is only used on a few modes (low shelf, high shelf, and peaking)
 To set the gain to 10 dB:
 
 ```javascript
-biquadFilterNode.gain.setValueAtTime(10, biquadFilterNodeContext.currentTime);
+biquadFilterNode.gain.setValueAtTime(10, context.currentTime);
 ```

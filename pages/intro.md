@@ -2,7 +2,7 @@
 
 ![waveform](./images/waveform.png)
 
-**Note: Chrome or Firefox are recommended for audio demos.**
+**Note: Chrome or Firefox are recommended for audio demos.***
 
 ## What is it?
 
@@ -99,4 +99,4 @@ Here is a simple demo that uses a context, oscillator, and destination.  Notice 
     </template>
 </audio-demo>
 
-Note: Audio demo support for Safari may be added eventually or we might just wait until Safari implements the web audio API to spec.
+*Because this site is intended to teach the web audio API as it will end up being implemented, it will focus on the standard practices which [Chrome (including Android) and Firefox implement but Safari (including iOS) does not](https://caniuse.com/#feat=audio-api).  The audio demos should work in Safari once Safari supports the [official web audio API specification](https://www.w3.org/TR/webaudio/).

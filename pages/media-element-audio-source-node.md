@@ -26,7 +26,7 @@ _Like the song?  Download the album for free [here](https://interlucid.bandcamp.
 
 <audio-demo>
     <template>
-        <audio src="/sounds/songs/options.m4a" controls controlsList="nodownload"></audio>
+        <audio src="./sounds/songs/options.m4a" controls controlsList="nodownload"></audio>
         <script>
             const context = new AudioContext();
             let mediaElementAudioSourceNode;

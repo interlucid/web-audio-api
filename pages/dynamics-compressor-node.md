@@ -12,7 +12,7 @@ _Like the song?  Download the album for free [here](https://interlucid.bandcamp.
 
 <audio-demo>
     <template>
-        <audio src="/sounds/songs/options.m4a" controls controlsList="nodownload"></audio>
+        <audio src="./sounds/songs/options.m4a" controls controlsList="nodownload"></audio>
         <button onclick="toggleCompression()">Turn compression <span id="compression">off</span></button>
         <br>
         Threshold (<span id="threshold">-24</span> dB):

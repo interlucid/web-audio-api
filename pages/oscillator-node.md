@@ -29,15 +29,15 @@ Physical oscillators are electronic circuits that produce a signal that moves ba
             Detune: <input type="range" min="-100" max="100" value="0" oninput="changeDetune(value)">
         </div>
         <script>
-            const oscillatorNodeContext = new AudioContext();
+            const context = new AudioContext();
             let oscillatorNode;
             const startTone = () => {
                 // stop the previous oscillator from playing
                 if(oscillatorNode) oscillatorNode.stop();
                 // create a new oscillator node (the old node is discarded)
-                oscillatorNode = oscillatorNodeContext.createOscillator();
+                oscillatorNode = context.createOscillator();
                 // connect it to the destination
-                oscillatorNode.connect(oscillatorNodeContext.destination);
+                oscillatorNode.connect(context.destination);
                 // start the oscillator
                 oscillatorNode.start();
             }
@@ -50,10 +50,10 @@ Physical oscillators are electronic circuits that produce a signal that moves ba
             }
             const changeFrequency = (frequency) => {
                 // this helps us perceive the sound as being linear
-                oscillatorNode.frequency.setValueAtTime(Math.pow(2, frequency / 100), oscillatorNodeContext.currentTime);
+                oscillatorNode.frequency.setValueAtTime(Math.pow(2, frequency / 100), context.currentTime);
             }
             const changeDetune = (detune) => {
-                oscillatorNode.detune.setValueAtTime(detune, oscillatorNodeContext.currentTime);
+                oscillatorNode.detune.setValueAtTime(detune, context.currentTime);
             }
         </script>
     </template>
