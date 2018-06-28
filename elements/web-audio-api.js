@@ -1,17 +1,20 @@
-<link rel="import" href="../styles/styles.html">
-<link rel="import" href="../styles/syntax-highlighting.html">
-<link rel="import" href="../elements/feedback-form.html">
-<link rel="import" href="../elements/audio-demo.html">
-<link rel="import" href="../elements/markdown-element.html">
-<link rel="import" href="../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../bower_components/app-route/app-route.html">
-<link rel="import" href="../bower_components/app-route/app-location.html">
-<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
-
-<dom-module id="web-audio-api">
-
-    <template>
-
+import '../styles/styles.js';
+import '../styles/syntax-highlighting.js';
+import './feedback-form.js';
+import './audio-demo.js';
+import './markdown-element.js';
+import { PolymerElement } from '@polymer/polymer/polymer-element.js';
+import '@polymer/app-route/app-route.js';
+import '@polymer/app-route/app-location.js';
+import '@polymer/iron-icons/iron-icons.js';
+import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+/**
+ * @customElement
+ * @polymer
+ */
+class WebAudioApi extends PolymerElement {
+  static get template() {
+    return html`
         <style is="custom-style" include="int-styles syntax-highlighting">
             :host {
                 --container-width: 1050px;
@@ -115,10 +118,10 @@
         <app-route route="{{route}}" pattern="/web-audio-api/:slug" active="{{active}}" data="{{data}}"></app-route>
 
         <iron-icon id="menu-icon" icon="[[menuIcon]]" on-click="toggleMenu"></iron-icon>
-        <div id="menu-screen" class$="[[menuCovering]]" on-click="toggleMenu"></div>
+        <div id="menu-screen" class\$="[[menuCovering]]" on-click="toggleMenu"></div>
         
         <div id="container">
-            <markdown-element id="contents" src="./pages/contents.md" class$="[[menuStatus]]">
+            <markdown-element id="contents" src="./pages/contents.md" class\$="[[menuStatus]]">
                 <div slot="markdown-html"></div>
             </markdown-element>
             <markdown-element src="[[url]]">
@@ -132,73 +135,63 @@
             <a href="https://github.com/interlucid/web-audio-api" target="_blank">GitHub</a>. Support me on
             <a href="https://www.patreon.com/interlucid" target="_blank">Patreon</a>!
         </footer>
+`;
+  }
 
-     </template>
+  static get is() { return 'web-audio-api'; }
 
-    <script>
-        /**
-         * @customElement
-         * @polymer
-         */
-        class WebAudioApi extends Polymer.Element {
+  static get properties() {
+      return {
+          url: {
+              type: String,
+              computed: 'computeSlug(data.slug)'
+          },
+          date: {
+              type: String,
+              value: new Date().getFullYear()
+          },
+          menuOpen: {
+              type: Boolean,
+              value: false
+          },
+          menuIcon: {
+              type: String,
+              computed: 'computeMenuIcon(menuOpen)'
+          },
+          menuStatus: {
+              type: String,
+              computed: 'computeMenuStatus(menuOpen)'
+          },
+          menuCovering: {
+              type: String,
+              computed: 'computeMenuCovering(menuOpen)'
+          }
+      };
+  }
 
-            static get is() { return 'web-audio-api'; }
+  computeSlug(dataSlug) {
+      return `./pages/${(!dataSlug || dataSlug === '') ? 'intro' : dataSlug}.md`;
+  }
 
-            static get properties() {
-                return {
-                    url: {
-                        type: String,
-                        computed: 'computeSlug(data.slug)'
-                    },
-                    date: {
-                        type: String,
-                        value: new Date().getFullYear()
-                    },
-                    menuOpen: {
-                        type: Boolean,
-                        value: false
-                    },
-                    menuIcon: {
-                        type: String,
-                        computed: 'computeMenuIcon(menuOpen)'
-                    },
-                    menuStatus: {
-                        type: String,
-                        computed: 'computeMenuStatus(menuOpen)'
-                    },
-                    menuCovering: {
-                        type: String,
-                        computed: 'computeMenuCovering(menuOpen)'
-                    }
-                };
-            }
+  computeMenuIcon(menuOpen) {
+      return menuOpen ? 'clear' : 'menu';
+  }
 
-            computeSlug(dataSlug) {
-                return `./pages/${(!dataSlug || dataSlug === '') ? 'intro' : dataSlug}.md`;
-            }
+  computeMenuStatus(menuOpen) {
+      return menuOpen ? 'menu-open' : 'menu-closed';
+  }
 
-            computeMenuIcon(menuOpen) {
-                return menuOpen ? 'clear' : 'menu';
-            }
+  computeMenuCovering(menuOpen) {
+      return menuOpen ? 'covering' : 'uncovering';
+  }
 
-            computeMenuStatus(menuOpen) {
-                return menuOpen ? 'menu-open' : 'menu-closed';
-            }
+  toggleMenu() {
+      this.menuOpen = !this.menuOpen;
+  }
 
-            computeMenuCovering(menuOpen) {
-                return menuOpen ? 'covering' : 'uncovering';
-            }
+  resetMenu() {
+      this.menuOpen = true;
+  }
+}
 
-            toggleMenu() {
-                this.menuOpen = !this.menuOpen;
-            }
-
-            resetMenu() {
-                this.menuOpen = true;
-            }
-
-        }
-
-        window.customElements.define(WebAudioApi.is, WebAudioApi);
-    </script>
-</dom-module>
+window.customElements.define(WebAudioApi.is, WebAudioApi);

@@ -1,7 +1,11 @@
 {
-  "lint": {
-    "rules": [
-      "polymer-2"
+    "shell": "elements/int-app.js",
+    "sources": [
+        "elements/**/*",
+        "images/**/*",
+        "styles/**/*"
+    ],
+    "extraDependencies": [
+        "node_modules/**/*"
     ]
-  }
 }
