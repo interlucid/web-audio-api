@@ -1,0 +1,16 @@
+{
+  "name": "@polymer/web-audio-api",
+  "flat": true,
+  "version": "1.0.0",
+  "description": "Web Audio API Tutorial",
+  "main": "index.html",
+  "dependencies": {
+    "@polymer/app-route": "^3.0.0-pre.12",
+    "@polymer/iron-icons": "^3.0.0-pre.12",
+    "@polymer/marked-element": "^3.0.0-pre.12",
+    "@polymer/polymer": "^3.0.0-pre.12",
+    "commonmark": "^0.28.1",
+    "prismjs": "^1.14.0"
+  },
+  "devDependencies": {}
+}
