@@ -4,6 +4,7 @@
         "elements/**/*",
         "images/**/*",
         "sounds/**/*",
+        "pages/**/*",
         "styles/**/*"
     ],
     "extraDependencies": [

@@ -3,10 +3,9 @@ import '../styles/styles.js';
 import '../styles/syntax-highlighting.js';
 import './feedback-form.js';
 import './audio-demo.js';
-// import './markdown-element.js';
+import './markdown-element.js';
 import '@polymer/app-route/app-route.js';
 import '@polymer/app-route/app-location.js';
-import '@polymer/iron-icons/iron-icons.js';
 
 /**
  * @customElement
