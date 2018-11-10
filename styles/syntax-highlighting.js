@@ -1,4 +1,7 @@
-<dom-module id="syntax-highlighting">
+const $_documentContainer = document.createElement('template');
+$_documentContainer.setAttribute('style', 'display: none;');
+
+$_documentContainer.innerHTML = `<dom-module id="syntax-highlighting">
 
   <template>
 
@@ -102,4 +105,6 @@
 
   </template>
 
-</dom-module>
+</dom-module>`;
+
+document.head.appendChild($_documentContainer.content);

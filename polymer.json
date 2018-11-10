@@ -1,7 +1,12 @@
 {
-  "lint": {
-    "rules": [
-      "polymer-2"
+    "shell": "elements/web-audio-api.js",
+    "sources": [
+        "elements/**/*",
+        "images/**/*",
+        "sounds/**/*",
+        "styles/**/*"
+    ],
+    "extraDependencies": [
+        "node_modules/**/*"
     ]
-  }
 }

@@ -1,21 +1,16 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+<!DOCTYPE html>
 
-    <title>Web Audio API Tutorial</title>
-    <meta name="description" content="Ever wanted to make retro sounding synth noises using just your browser?  Check out this tutorial on the Web Audio API!">
-    <link rel="stylesheet" type="text/css" href="./styles/styles.css">
-
-    <!-- See https://goo.gl/OOhYW5 -->
-    <link rel="manifest" href="/manifest.json">
-
-    <script src="./bower_components/webcomponentsjs/webcomponents-loader.js"></script>
-
-    <link rel="import" href="./elements/web-audio-api.html">
-  </head>
-  <body>
-    <web-audio-api></web-audio-api>
-  </body>
+<html>
+    <head>
+        <title>Web Audio API Tutorial</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="manifest" href="./manifest.json">
+        <link rel="stylesheet" type="text/css" href="./styles/styles.css">
+        <script src="./node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+        <script type="module" src="./elements/web-audio-api.js"></script>
+    </head>
+    <body>
+        <web-audio-api></web-audio-api>
+    </body>
 </html>
