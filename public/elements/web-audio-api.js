@@ -6,7 +6,6 @@ import './markdown-element.js';
 import { PolymerElement } from '../node_modules/@polymer/polymer/polymer-element.js';
 import '../node_modules/@polymer/app-route/app-route.js';
 import '../node_modules/@polymer/app-route/app-location.js';
-import '../node_modules/@polymer/iron-icons/iron-icons.js';
 /**
  * @customElement
  * @polymer

@@ -47,7 +47,7 @@
             // loop through the sounds we want to import
             for(let soundName of drumKitSoundNames) {
                 // fetch them from the file system
-                fetch('/sounds/drums/' + soundName + '.wav')
+                fetch('./sounds/drums/' + soundName + '.wav')
                     // when we get the asynchronous response, convert to an ArrayBuffer
                     .then(response => response.arrayBuffer())
                     .then(buffer => {
