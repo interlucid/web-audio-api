@@ -6,37 +6,35 @@ import { html } from '@polymer/polymer/lib/utils/html-tag.js';
  * @polymer
  */
 class FeedbackForm extends PolymerElement {
-  static get template() {
-    return html`
-    <style include="int-styles">
+    static get template() {
+        return html`
+            <style include="int-styles">
 
-      :host {
-        display: block;
-        margin: auto;
-        max-width: 400px;
-      }
+                :host {
+                    display: block;
+                    margin: auto;
+                    max-width: 400px;
+                }
 
-    </style>
+            </style>
 
-    <div class="int-vertical-container">
-      <input placeholder="Subject">
-      <textarea placeholder="Message"></textarea>
-      <button>Submit</button>
-    </div>
-`;
-  }
+            <div class="int-vertical-container">
+                <input placeholder="Subject">
+                <textarea placeholder="Message"></textarea>
+                <button>Submit</button>
+            </div>
+        `;
+    }
 
-  static get is() { return 'feedback-form'; }
-
-  static get properties() {
-    return {
-      slug: {
-        type: String,
-        value: 'contents',
-        computed: `computeSlug(data.slug)`
-      }
-    };
-  }
+    static get properties() {
+        return {
+            slug: {
+                type: String,
+                value: 'contents',
+                computed: `computeSlug(data.slug)`
+            }
+        };
+    }
 }
 
-window.customElements.define(FeedbackForm.is, FeedbackForm);
+window.customElements.define('feedback-form', FeedbackForm);

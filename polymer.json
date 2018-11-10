@@ -1,8 +1,9 @@
 {
-    "shell": "elements/int-app.js",
+    "shell": "elements/web-audio-api.js",
     "sources": [
         "elements/**/*",
         "images/**/*",
+        "sounds/**/*",
         "styles/**/*"
     ],
     "extraDependencies": [
